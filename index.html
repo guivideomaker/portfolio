@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>G. — Portfolio</title>
+<link rel="icon" type="image/png" href="assets/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0F2A30;        /* azul-petróleo profundo (fundo) */
+    --bg-deep: #081A1E;   /* mais escuro ainda */
+    --ink: #E8E2D5;       /* off-white quente (texto) */
+    --accent: #C7A87A;    /* dourado dessaturado */
+    --accent-2: #4A8B92;  /* turquesa apagado */
+    --muted: #7A8A8C;     /* azul-acinzentado */
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body { height: 100%; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Instrument Serif', serif;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* grain texture */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.45'/%3E%3C/svg%3E");
+    opacity: 0.15;
+    mix-blend-mode: overlay;
+    z-index: 100;
+  }
+
+  .stage {
+    height: 100vh;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    position: relative;
+  }
+
+  /* LEFT side - portrait */
+  .portrait {
+    position: relative;
+    background: var(--bg-deep);
+    overflow: hidden;
+  }
+
+  .portrait img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    filter: contrast(1.1) brightness(0.85) saturate(0.7);
+  }
+
+  .portrait::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(180deg, rgba(15,42,48,0.2) 0%, rgba(15,42,48,0.55) 100%),
+      linear-gradient(90deg, rgba(74,139,146,0.15) 0%, transparent 60%);
+    mix-blend-mode: multiply;
+  }
+
+  /* HUGE title overlaid */
+  .titlewrap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 5;
+    display: flex;
+    align-items: flex-start;
+    overflow: hidden;
+  }
+
+  .megatype {
+    font-family: 'Anton', sans-serif;
+    font-size: clamp(120px, 18vw, 280px);
+    line-height: 0.82;
+    letter-spacing: -0.04em;
+    color: var(--bg);
+    margin-top: -2vw;
+    margin-left: -1vw;
+    white-space: nowrap;
+    mix-blend-mode: difference;
+    text-transform: uppercase;
+  }
+
+  /* RIGHT side - login */
+  .access {
+    padding: 48px 56px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+  }
+
+  .topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 10;
+    position: relative;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .logo img {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    filter: invert(1);
+  }
+
+  .logo-text {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+
+  .topbar-right {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-align: right;
+    line-height: 1.6;
+    color: var(--ink);
+  }
+
+  /* center login form */
+  .form-zone {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    max-width: 440px;
+    z-index: 10;
+    position: relative;
+  }
+
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .eyebrow::before {
+    content: '';
+    width: 28px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .form-title {
+    font-family: 'Anton', sans-serif;
+    font-size: clamp(56px, 7vw, 96px);
+    line-height: 0.92;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+  }
+
+  .form-title em {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-weight: 400;
+    color: var(--accent);
+    text-transform: none;
+    letter-spacing: -0.01em;
+  }
+
+  .form-desc {
+    font-size: 19px;
+    line-height: 1.4;
+    color: var(--muted);
+    max-width: 360px;
+  }
+
+  .input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 8px;
+  }
+
+  .input-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .input-row {
+    display: flex;
+    gap: 0;
+    border-bottom: 1.5px solid var(--ink);
+    align-items: center;
+    transition: border-color 0.3s;
+  }
+
+  .input-row:focus-within {
+    border-color: var(--accent);
+  }
+
+  .input-row input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    padding: 14px 0;
+    font-family: 'Instrument Serif', serif;
+    font-size: 22px;
+    color: var(--ink);
+    letter-spacing: 0.05em;
+  }
+
+  .input-row input::placeholder {
+    color: var(--muted);
+    opacity: 0.5;
+    font-style: italic;
+  }
+
+  .submit-btn {
+    background: var(--ink);
+    color: var(--bg);
+    border: none;
+    padding: 18px 32px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    margin-top: 8px;
+    align-self: flex-start;
+    transition: all 0.25s cubic-bezier(.7,.1,.2,1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .submit-btn:hover {
+    background: var(--accent);
+    color: var(--bg-deep);
+    padding-right: 44px;
+  }
+
+  .submit-btn .arrow {
+    display: inline-block;
+    transition: transform 0.25s;
+  }
+
+  .submit-btn:hover .arrow {
+    transform: translateX(6px);
+  }
+
+  .error-msg {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    margin-top: 4px;
+    min-height: 14px;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .error-msg.show { opacity: 1; }
+
+  /* bottom credit */
+  .bottombar {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    z-index: 10;
+    position: relative;
+  }
+
+  .roles {
+    line-height: 1.7;
+  }
+
+  .roles span { display: block; }
+
+  .copyright {
+    text-align: right;
+  }
+
+  /* deco shape */
+  .deco-circle {
+    position: absolute;
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    background: var(--accent);
+    top: 18%;
+    right: -90px;
+    z-index: 2;
+    opacity: 0.12;
+  }
+
+  .deco-square {
+    position: absolute;
+    width: 90px;
+    height: 90px;
+    background: var(--accent-2);
+    bottom: 22%;
+    right: 38%;
+    z-index: 2;
+    transform: rotate(12deg);
+    opacity: 0.15;
+  }
+
+  /* entrance animations */
+  .anim {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: rise 0.9s cubic-bezier(.2,.7,.2,1) forwards;
+  }
+
+  .anim-1 { animation-delay: 0.1s; }
+  .anim-2 { animation-delay: 0.25s; }
+  .anim-3 { animation-delay: 0.4s; }
+  .anim-4 { animation-delay: 0.55s; }
+  .anim-5 { animation-delay: 0.7s; }
+
+  @keyframes rise {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .megatype {
+    opacity: 0;
+    animation: slideIn 1.2s cubic-bezier(.2,.7,.2,1) 0.2s forwards;
+  }
+
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateX(-40px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  /* Mobile */
+  @media (max-width: 900px) {
+    .stage {
+      grid-template-columns: 1fr;
+      grid-template-rows: 40vh 60vh;
+    }
+    .access { padding: 24px 22px; }
+    .megatype {
+      font-size: clamp(72px, 22vw, 140px);
+    }
+    .form-title {
+      font-size: clamp(44px, 12vw, 68px);
+    }
+    .deco-circle { width: 120px; height: 120px; right: -60px; top: 8%; }
+    .deco-square { display: none; }
+    .topbar-right { font-size: 9px; }
+    .bottombar { font-size: 9px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="stage">
+
+  <!-- LEFT: Portrait + megatype -->
+  <div class="portrait">
+    <img src="assets/profile.png" alt="">
+    <div class="titlewrap">
+      <h1 class="megatype">PORTFOLIO</h1>
+    </div>
+  </div>
+
+  <!-- RIGHT: Login -->
+  <div class="access">
+    <div class="deco-circle"></div>
+    <div class="deco-square"></div>
+
+    <!-- TOP -->
+    <div class="topbar anim anim-1">
+      <div class="logo">
+        <img src="assets/logo.png" alt="G">
+        <span class="logo-text">G. Studios</span>
+      </div>
+      <div class="topbar-right">
+        Filmmaking<br>
+        Cinematography<br>
+        Edition
+      </div>
+    </div>
+
+    <!-- FORM -->
+    <div class="form-zone">
+      <div class="eyebrow anim anim-2">Acesso restrito · 2026</div>
+
+      <h2 class="form-title anim anim-3">
+        Building<br>
+        <em>cinematic</em><br>
+        stories
+      </h2>
+
+      <p class="form-desc anim anim-4">
+        Portfólio selecionado com trabalhos de filmmaking, direção de fotografia, captação e edição. Digite a senha para acessar.
+      </p>
+
+      <form id="loginForm" class="anim anim-4" autocomplete="off">
+        <div class="input-group">
+          <label class="input-label" for="pwd">Senha</label>
+          <div class="input-row">
+            <input type="password" id="pwd" name="pwd" placeholder="••••••••" required autofocus>
+          </div>
+          <div class="error-msg" id="err">Senha incorreta. Tente novamente.</div>
+        </div>
+
+        <button type="submit" class="submit-btn">
+          Acessar portfólio
+          <span class="arrow">→</span>
+        </button>
+      </form>
+    </div>
+
+    <!-- BOTTOM -->
+    <div class="bottombar anim anim-5">
+      <div class="roles">
+        <span>— Filmmaker</span>
+        <span>— Director of Photography</span>
+        <span>— Editor</span>
+      </div>
+      <div class="copyright">
+        ©2025—2026<br>
+        All rights reserved
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // ============================================
+  // SENHA — TROQUE AQUI
+  // ============================================
+  // Para portfólio compartilhado com clientes, isso é suficiente.
+  // Para segurança REAL (criptografia), use StaticCrypt — veja README.
+  const SENHA_CORRETA = "filmmaker2026";
+  // ============================================
+
+  const form = document.getElementById('loginForm');
+  const input = document.getElementById('pwd');
+  const err = document.getElementById('err');
+
+  // se já está autenticado nesta sessão, vai direto
+  if (sessionStorage.getItem('gst_access') === 'ok') {
+    window.location.href = 'portfolio.html';
+  }
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (input.value === SENHA_CORRETA) {
+      sessionStorage.setItem('gst_access', 'ok');
+      document.querySelector('.access').style.transition = 'opacity 0.4s';
+      document.querySelector('.access').style.opacity = '0';
+      setTimeout(() => {
+        window.location.href = 'portfolio.html';
+      }, 400);
+    } else {
+      err.classList.add('show');
+      input.value = '';
+      input.focus();
+      // shake animation
+      input.parentElement.animate(
+        [{ transform: 'translateX(0)' },{ transform: 'translateX(-8px)' },{ transform: 'translateX(8px)' },{ transform: 'translateX(0)' }],
+        { duration: 300 }
+      );
+    }
+  });
+
+  input.addEventListener('input', () => err.classList.remove('show'));
+</script>
+
+</body>
+</html>
