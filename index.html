@@ -3,190 +3,154 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>G. — Portfolio</title>
+<title>G. — Portfolio · Selected Works</title>
 <link rel="icon" type="image/png" href="assets/logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0F2A30;        /* azul-petróleo profundo (fundo) */
-    --bg-deep: #081A1E;   /* mais escuro ainda */
-    --ink: #E8E2D5;       /* off-white quente (texto) */
-    --accent: #C7A87A;    /* dourado dessaturado */
-    --accent-2: #4A8B92;  /* turquesa apagado */
-    --muted: #7A8A8C;     /* azul-acinzentado */
+    --bg: #0F2A30;
+    --bg-deep: #081A1E;
+    --bg-soft: #143840;
+    --ink: #E8E2D5;
+    --accent: #C7A87A;
+    --accent-2: #4A8B92;
+    --accent-3: #B89968;
+    --muted: #7A8A8C;
+    --card: #143840;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  html, body { height: 100%; }
+  html { scroll-behavior: smooth; }
 
   body {
     background: var(--bg);
     color: var(--ink);
     font-family: 'Instrument Serif', serif;
-    overflow: hidden;
-    position: relative;
+    overflow-x: hidden;
   }
 
-  /* grain texture */
   body::before {
     content: '';
     position: fixed;
     inset: 0;
     pointer-events: none;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.45'/%3E%3C/svg%3E");
-    opacity: 0.15;
+    opacity: 0.12;
     mix-blend-mode: overlay;
-    z-index: 100;
+    z-index: 200;
   }
 
-  .stage {
-    height: 100vh;
-    width: 100%;
-    display: grid;
-    grid-template-columns: 1fr 1.1fr;
-    position: relative;
-  }
-
-  /* LEFT side - portrait */
-  .portrait {
-    position: relative;
-    background: var(--bg-deep);
-    overflow: hidden;
-  }
-
-  .portrait img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-    filter: contrast(1.1) brightness(0.85) saturate(0.7);
-  }
-
-  .portrait::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background:
-      linear-gradient(180deg, rgba(15,42,48,0.2) 0%, rgba(15,42,48,0.55) 100%),
-      linear-gradient(90deg, rgba(74,139,146,0.15) 0%, transparent 60%);
-    mix-blend-mode: multiply;
-  }
-
-  /* HUGE title overlaid */
-  .titlewrap {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 5;
-    display: flex;
-    align-items: flex-start;
-    overflow: hidden;
-  }
-
-  .megatype {
-    font-family: 'Anton', sans-serif;
-    font-size: clamp(120px, 18vw, 280px);
-    line-height: 0.82;
-    letter-spacing: -0.04em;
-    color: var(--bg);
-    margin-top: -2vw;
-    margin-left: -1vw;
-    white-space: nowrap;
-    mix-blend-mode: difference;
-    text-transform: uppercase;
-  }
-
-  /* RIGHT side - login */
-  .access {
-    padding: 48px 56px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    position: relative;
-  }
-
-  .topbar {
+  /* ============ NAV ============ */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    padding: 18px 40px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    z-index: 10;
-    position: relative;
+    z-index: 100;
+    background: rgba(15, 42, 48, 0.75);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(232, 226, 213, 0.08);
   }
 
-  .logo {
+  .nav-logo {
     display: flex;
     align-items: center;
     gap: 12px;
   }
 
-  .logo img {
-    width: 38px;
-    height: 38px;
+  .nav-logo img {
+    width: 30px; height: 30px;
     border-radius: 50%;
     filter: invert(1);
   }
 
-  .logo-text {
+  .nav-logo-text {
     font-family: 'JetBrains Mono', monospace;
     font-size: 11px;
     letter-spacing: 0.15em;
     text-transform: uppercase;
-    color: var(--ink);
   }
 
-  .topbar-right {
+  .nav-links {
+    display: flex;
+    gap: 28px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  .nav-links a {
+    color: var(--ink);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--accent); }
+
+  .logout-btn {
+    background: transparent;
+    border: 1px solid var(--ink);
+    padding: 8px 14px;
     font-family: 'JetBrains Mono', monospace;
     font-size: 10px;
-    letter-spacing: 0.18em;
+    letter-spacing: 0.15em;
     text-transform: uppercase;
-    text-align: right;
-    line-height: 1.6;
+    cursor: pointer;
+    transition: all 0.2s;
     color: var(--ink);
   }
 
-  /* center login form */
-  .form-zone {
-    display: flex;
-    flex-direction: column;
-    gap: 28px;
-    max-width: 440px;
-    z-index: 10;
+  .logout-btn:hover {
+    background: var(--ink);
+    color: var(--bg-deep);
+  }
+
+  /* ============ HERO COMPACTO ============ */
+  .hero {
+    padding: 110px 40px 30px;
     position: relative;
   }
 
-  .eyebrow {
+  .hero-eyebrow {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.2em;
+    font-size: 10px;
+    letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--accent);
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
+    margin-bottom: 16px;
   }
 
-  .eyebrow::before {
+  .hero-eyebrow::before {
     content: '';
     width: 28px;
     height: 1px;
     background: var(--accent);
   }
 
-  .form-title {
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 60px;
+    align-items: end;
+  }
+
+  .hero-title {
     font-family: 'Anton', sans-serif;
-    font-size: clamp(56px, 7vw, 96px);
-    line-height: 0.92;
-    letter-spacing: -0.02em;
+    font-size: clamp(40px, 5.5vw, 78px);
+    line-height: 1;
+    letter-spacing: -0.025em;
     text-transform: uppercase;
   }
 
-  .form-title em {
+  .hero-title em {
     font-family: 'Instrument Serif', serif;
     font-style: italic;
     font-weight: 400;
@@ -195,318 +159,1267 @@
     letter-spacing: -0.01em;
   }
 
-  .form-desc {
-    font-size: 19px;
-    line-height: 1.4;
-    color: var(--muted);
-    max-width: 360px;
-  }
-
-  .input-group {
+  .hero-meta {
     display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-top: 8px;
-  }
-
-  .input-label {
+    gap: 32px;
     font-family: 'JetBrains Mono', monospace;
     font-size: 10px;
-    letter-spacing: 0.2em;
+    letter-spacing: 0.15em;
     text-transform: uppercase;
-    color: var(--muted);
+    padding-bottom: 8px;
   }
 
-  .input-row {
-    display: flex;
-    gap: 0;
-    border-bottom: 1.5px solid var(--ink);
-    align-items: center;
-    transition: border-color 0.3s;
-  }
+  .hero-meta-item span { display: block; color: var(--muted); margin-bottom: 4px; }
+  .hero-meta-item strong { color: var(--ink); font-weight: 500; }
 
-  .input-row:focus-within {
-    border-color: var(--accent);
-  }
-
-  .input-row input {
-    flex: 1;
-    background: transparent;
-    border: none;
-    outline: none;
-    padding: 14px 0;
-    font-family: 'Instrument Serif', serif;
-    font-size: 22px;
+  .hero-desc {
+    font-size: 17px;
+    line-height: 1.45;
     color: var(--ink);
-    letter-spacing: 0.05em;
+    max-width: 480px;
+    margin-top: 18px;
+    opacity: 0.85;
   }
 
-  .input-row input::placeholder {
-    color: var(--muted);
-    opacity: 0.5;
-    font-style: italic;
+  /* ============ FEATURED (vídeo destaque grande) ============ */
+  .featured {
+    padding: 30px 40px 20px;
+    position: relative;
   }
 
-  .submit-btn {
-    background: var(--ink);
-    color: var(--bg);
-    border: none;
-    padding: 18px 32px;
+  .featured-wrap {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 21 / 9;
+    overflow: hidden;
+    border-radius: 6px;
+    background: var(--bg-deep);
+    border: 1px solid rgba(232, 226, 213, 0.08);
+  }
+
+  .featured-bg {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #143840 0%, #081A1E 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .featured-content {
+    position: absolute;
+    inset: 0;
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    background: linear-gradient(90deg, rgba(8,26,30,0.95) 0%, rgba(8,26,30,0.6) 50%, transparent 100%);
+    z-index: 5;
+  }
+
+  .featured-tag {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+
+  .featured-title {
+    font-family: 'Anton', sans-serif;
+    font-size: clamp(36px, 5vw, 64px);
+    line-height: 0.95;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    max-width: 60%;
+    margin-bottom: 12px;
+  }
+
+  .featured-desc {
+    font-size: 16px;
+    line-height: 1.45;
+    max-width: 50%;
+    color: var(--ink);
+    opacity: 0.85;
+    margin-bottom: 20px;
+  }
+
+  .featured-play {
+    background: var(--ink);
+    color: var(--bg-deep);
+    border: none;
+    padding: 12px 22px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
     letter-spacing: 0.2em;
     text-transform: uppercase;
     cursor: pointer;
     display: inline-flex;
     align-items: center;
-    gap: 14px;
-    margin-top: 8px;
+    gap: 10px;
     align-self: flex-start;
-    transition: all 0.25s cubic-bezier(.7,.1,.2,1);
+    transition: all 0.25s;
+  }
+
+  .featured-play:hover {
+    background: var(--accent);
+    gap: 14px;
+  }
+
+  .featured-play svg { width: 10px; height: 10px; }
+
+  /* video bg do hero (poster blur) */
+  .featured-poster {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    filter: blur(0px) brightness(0.45);
+  }
+
+  /* ============ FILTER BAR ============ */
+  .filter-bar {
+    padding: 0 40px 30px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    border-bottom: 1px solid rgba(232, 226, 213, 0.08);
+    margin-bottom: 30px;
+  }
+
+  .filter-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-right: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .filter-label::before {
+    content: '';
+    width: 24px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .filter-btn {
+    background: transparent;
+    border: 1px solid rgba(232, 226, 213, 0.2);
+    color: var(--ink);
+    padding: 9px 16px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(.2,.7,.2,1);
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+  }
+
+  .filter-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .filter-btn.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--bg-deep);
+  }
+
+  .filter-btn .count {
+    opacity: 0.6;
+    font-size: 9px;
+  }
+
+  .filter-btn.active .count { opacity: 0.85; }
+
+  /* ============ ROWS NETFLIX ============ */
+  .rows {
+    padding: 30px 0 60px;
+  }
+
+  .row {
+    margin-bottom: 36px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .row.visible { opacity: 1; transform: translateY(0); }
+
+  .row-header {
+    padding: 0 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 14px;
+  }
+
+  .row-title {
+    font-family: 'Anton', sans-serif;
+    font-size: 22px;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .row-title .count {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.15em;
+    font-weight: 400;
+  }
+
+  .row-nav {
+    display: flex;
+    gap: 8px;
+  }
+
+  .row-nav button {
+    width: 32px;
+    height: 32px;
+    border: 1px solid rgba(232, 226, 213, 0.2);
+    background: transparent;
+    color: var(--ink);
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+  }
+
+  .row-nav button:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .row-nav button:disabled {
+    opacity: 0.3;
+    cursor: default;
+  }
+
+  .row-nav button:disabled:hover {
+    border-color: rgba(232, 226, 213, 0.2);
+    color: var(--ink);
+  }
+
+  /* track horizontal */
+  .row-track {
+    display: flex;
+    gap: 14px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    padding: 8px 40px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .row-track::-webkit-scrollbar { display: none; }
+
+  /* Card — proporção fixa baseada no formato do vídeo */
+  .card {
+    flex: 0 0 auto;
+    height: 340px;
+    background: var(--bg-deep);
+    border-radius: 5px;
+    overflow: hidden;
     position: relative;
+    cursor: pointer;
+    transition: transform 0.3s cubic-bezier(.2,.7,.2,1), box-shadow 0.3s;
+    border: 1px solid rgba(232, 226, 213, 0.06);
+  }
+
+  /* Card vertical 9:16 */
+  .card.v {
+    aspect-ratio: 9 / 16;
+  }
+
+  /* Card horizontal 16:9 */
+  .card.h {
+    aspect-ratio: 16 / 9;
+  }
+
+  .card:hover {
+    transform: translateY(-4px);
+    z-index: 10;
+    box-shadow: 0 16px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(199, 168, 122, 0.4);
+  }
+
+  .card-thumb {
+    position: absolute;
+    inset: 0;
+    background: var(--bg-deep);
+    display: flex;
+    align-items: center;
+    justify-content: center;
     overflow: hidden;
   }
 
-  .submit-btn:hover {
-    background: var(--accent);
-    color: var(--bg-deep);
-    padding-right: 44px;
+  .card-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    transition: filter 0.4s, opacity 0.5s;
+    filter: brightness(0.92);
   }
 
-  .submit-btn .arrow {
-    display: inline-block;
-    transition: transform 0.25s;
+  .card:hover .card-thumb img {
+    filter: brightness(1.05);
   }
 
-  .submit-btn:hover .arrow {
-    transform: translateX(6px);
-  }
-
-  .error-msg {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.1em;
-    color: var(--accent);
-    margin-top: 4px;
-    min-height: 14px;
-    opacity: 0;
-    transition: opacity 0.2s;
-  }
-
-  .error-msg.show { opacity: 1; }
-
-  /* bottom credit */
-  .bottombar {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--muted);
-    z-index: 10;
-    position: relative;
-  }
-
-  .roles {
-    line-height: 1.7;
-  }
-
-  .roles span { display: block; }
-
-  .copyright {
-    text-align: right;
-  }
-
-  /* deco shape */
-  .deco-circle {
+  /* Skeleton enquanto carrega */
+  .thumb-skeleton {
     position: absolute;
-    width: 180px;
-    height: 180px;
+    inset: 0;
+    background: linear-gradient(110deg,
+      rgba(232, 226, 213, 0.04) 30%,
+      rgba(232, 226, 213, 0.10) 50%,
+      rgba(232, 226, 213, 0.04) 70%);
+    background-size: 200% 100%;
+    animation: shimmer 1.4s linear infinite;
+  }
+
+  @keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+
+  /* play overlay no card */
+  .card-play {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(180deg, transparent 40%, rgba(8,26,30,0.85) 100%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: 3;
+  }
+
+  .card:hover .card-play { opacity: 1; }
+
+  .card-play-icon {
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
     background: var(--accent);
-    top: 18%;
-    right: -90px;
-    z-index: 2;
-    opacity: 0.12;
+    color: var(--bg-deep);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 8px;
   }
 
-  .deco-square {
+  /* card info (sempre visível embaixo) */
+  .card-info {
     position: absolute;
-    width: 90px;
-    height: 90px;
-    background: var(--accent-2);
-    bottom: 22%;
-    right: 38%;
-    z-index: 2;
-    transform: rotate(12deg);
-    opacity: 0.15;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 14px;
+    background: linear-gradient(180deg, transparent 0%, rgba(8,26,30,0.95) 70%);
+    z-index: 4;
+    pointer-events: none;
   }
 
-  /* entrance animations */
-  .anim {
-    opacity: 0;
-    transform: translateY(20px);
-    animation: rise 0.9s cubic-bezier(.2,.7,.2,1) forwards;
+  .card-format {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 5px;
+    display: inline-block;
+    padding: 3px 7px;
+    border: 1px solid rgba(199, 168, 122, 0.3);
+    border-radius: 2px;
   }
 
-  .anim-1 { animation-delay: 0.1s; }
-  .anim-2 { animation-delay: 0.25s; }
-  .anim-3 { animation-delay: 0.4s; }
-  .anim-4 { animation-delay: 0.55s; }
-  .anim-5 { animation-delay: 0.7s; }
-
-  @keyframes rise {
-    to { opacity: 1; transform: translateY(0); }
+  .card-title {
+    font-family: 'Anton', sans-serif;
+    font-size: 16px;
+    line-height: 1.05;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    margin-bottom: 4px;
   }
 
-  .megatype {
-    opacity: 0;
-    animation: slideIn 1.2s cubic-bezier(.2,.7,.2,1) 0.2s forwards;
+  .card-client {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    text-transform: uppercase;
   }
 
-  @keyframes slideIn {
-    from { opacity: 0; transform: translateX(-40px); }
-    to { opacity: 1; transform: translateX(0); }
+  /* ============ MODAL ============ */
+  .modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(8, 26, 30, 0.92);
+    backdrop-filter: blur(8px);
+    z-index: 1000;
+    display: none;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 60px 20px;
+    overflow-y: auto;
+  }
+
+  .modal.open { display: flex; }
+
+  .modal-content {
+    background: var(--bg);
+    border: 1px solid rgba(232, 226, 213, 0.1);
+    border-radius: 8px;
+    max-width: 1100px;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    animation: modalIn 0.35s cubic-bezier(.2,.7,.2,1);
+  }
+
+  @keyframes modalIn {
+    from { opacity: 0; transform: translateY(20px) scale(0.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: rgba(8, 26, 30, 0.7);
+    border: 1px solid rgba(232, 226, 213, 0.2);
+    color: var(--ink);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 20;
+    transition: all 0.2s;
+    backdrop-filter: blur(6px);
+  }
+
+  .modal-close:hover {
+    background: var(--accent);
+    color: var(--bg-deep);
+    border-color: var(--accent);
+  }
+
+  .modal-video-wrap {
+    position: relative;
+    background: var(--bg-deep);
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .modal-video-wrap.h { aspect-ratio: 16 / 9; }
+
+  .modal-video-wrap.v {
+    aspect-ratio: 9 / 16;
+    max-width: 480px;
+    margin: 0 auto;
+    display: block;
+  }
+
+  .modal-video-wrap.both {
+    display: grid;
+    grid-template-columns: 2.2fr 1fr;
+    gap: 12px;
+    aspect-ratio: auto;
+    padding: 12px;
+  }
+
+  .modal-video-wrap.both .mv-h {
+    aspect-ratio: 16 / 9;
+    position: relative;
+    background: var(--bg-deep);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .modal-video-wrap.both .mv-v {
+    aspect-ratio: 9 / 16;
+    position: relative;
+    background: var(--bg-deep);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .modal-video-wrap iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+
+  .modal-body {
+    padding: 36px 40px 44px;
+  }
+
+  .modal-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .modal-eyebrow::before {
+    content: '';
+    width: 24px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .modal-title {
+    font-family: 'Anton', sans-serif;
+    font-size: clamp(32px, 4vw, 52px);
+    line-height: 1;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+  }
+
+  .modal-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    gap: 40px;
+    padding-top: 8px;
+    border-top: 1px solid rgba(232, 226, 213, 0.1);
+    margin-top: 4px;
+  }
+
+  .modal-block {
+    padding-top: 24px;
+  }
+
+  .modal-block .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 14px;
+    display: block;
+  }
+
+  .modal-block p {
+    font-size: 17px;
+    line-height: 1.5;
+    color: var(--ink);
+  }
+
+  .modal-roles {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+
+  .modal-roles span {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    gap: 9px;
+  }
+
+  .modal-roles span::before {
+    content: '';
+    width: 5px;
+    height: 5px;
+    background: var(--accent);
+    border-radius: 50%;
+  }
+
+  .modal-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  .modal-meta dt {
+    color: var(--muted);
+    margin-top: 8px;
+  }
+
+  .modal-meta dt:first-child { margin-top: 0; }
+
+  .modal-meta dd {
+    color: var(--ink);
+    font-weight: 500;
+    margin-bottom: 2px;
+  }
+
+  /* ============ FOOTER ============ */
+  footer {
+    background: var(--bg-deep);
+    color: var(--ink);
+    padding: 90px 40px 36px;
+    border-top: 1px solid rgba(232, 226, 213, 0.08);
+  }
+
+  .footer-cta {
+    font-family: 'Anton', sans-serif;
+    font-size: clamp(48px, 9vw, 130px);
+    line-height: 0.88;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
+    margin-bottom: 50px;
+  }
+
+  .footer-cta em {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-weight: 400;
+    color: var(--accent);
+    text-transform: none;
+  }
+
+  .footer-contact {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 40px;
+    padding: 36px 0;
+    border-top: 1px solid rgba(232, 226, 213, 0.1);
+    border-bottom: 1px solid rgba(232, 226, 213, 0.1);
+  }
+
+  .footer-contact .col-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(232, 226, 213, 0.5);
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .footer-contact a, .footer-contact span {
+    color: var(--ink);
+    text-decoration: none;
+    font-size: 17px;
+    line-height: 1.5;
+    transition: color 0.2s;
+    display: block;
+  }
+
+  .footer-contact a:hover { color: var(--accent); }
+
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 24px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(232, 226, 213, 0.5);
   }
 
   /* Mobile */
   @media (max-width: 900px) {
-    .stage {
-      grid-template-columns: 1fr;
-      grid-template-rows: 40vh 60vh;
-    }
-    .access { padding: 24px 22px; }
-    .megatype {
-      font-size: clamp(72px, 22vw, 140px);
-    }
-    .form-title {
-      font-size: clamp(44px, 12vw, 68px);
-    }
-    .deco-circle { width: 120px; height: 120px; right: -60px; top: 8%; }
-    .deco-square { display: none; }
-    .topbar-right { font-size: 9px; }
-    .bottombar { font-size: 9px; }
+    nav { padding: 14px 18px; }
+    .nav-links { display: none; }
+    .hero { padding: 90px 20px 20px; }
+    .hero-grid { grid-template-columns: 1fr; gap: 24px; }
+    .hero-meta { flex-wrap: wrap; gap: 18px; padding-bottom: 0; }
+    .featured { padding: 20px 20px 10px; }
+    .featured-wrap { aspect-ratio: 16 / 10; }
+    .featured-content { padding: 24px; }
+    .featured-title { max-width: 100%; }
+    .featured-desc { max-width: 100%; font-size: 14px; }
+    .row-header { padding: 0 20px; }
+    .filter-bar { padding: 0 20px 24px; gap: 8px; margin-bottom: 20px; }
+    .filter-label { width: 100%; margin-bottom: 4px; }
+    .filter-btn { padding: 7px 12px; font-size: 9px; }
+    .row-track { padding: 8px 20px; gap: 10px; }
+    .card { height: 260px; }
+    .row-title { font-size: 18px; }
+    .modal { padding: 20px 12px; }
+    .modal-body { padding: 24px 20px 28px; }
+    .modal-grid { grid-template-columns: 1fr; gap: 24px; }
+    .modal-video-wrap.both { grid-template-columns: 1fr; }
+    footer { padding: 60px 20px 28px; }
+    .footer-contact { grid-template-columns: 1fr; gap: 20px; }
+    .footer-bottom { flex-direction: column; gap: 10px; }
   }
 </style>
 </head>
 <body>
 
-<div class="stage">
+<!-- ====== NAV ====== -->
+<nav>
+  <div class="nav-logo">
+    <img src="assets/logo.png" alt="G">
+    <span class="nav-logo-text">G. Studios</span>
+  </div>
+  <div class="nav-links">
+    <a href="#work">Trabalhos</a>
+    <a href="#contact">Contato</a>
+  </div>
+</nav>
 
-  <!-- LEFT: Portrait + megatype -->
-  <div class="portrait">
-    <img src="assets/profile.png" alt="">
-    <div class="titlewrap">
-      <h1 class="megatype">PORTFOLIO</h1>
+<!-- ====== HERO COMPACTO ====== -->
+<section class="hero">
+  <div class="hero-eyebrow">Selected Works · 2024—2026</div>
+  <div class="hero-grid">
+    <h1 class="hero-title">
+      Filmmaking <em>&amp;</em> direção<br>de fotografia.
+    </h1>
+    <div class="hero-meta">
+      <div class="hero-meta-item">
+        <span>Localização</span>
+        <strong>São Paulo · BR</strong>
+      </div>
+      <div class="hero-meta-item">
+        <span>Status</span>
+        <strong>Disponível</strong>
+      </div>
+      <div class="hero-meta-item">
+        <span>Projetos</span>
+        <strong id="totalCount">—</strong>
+      </div>
     </div>
   </div>
+  <p class="hero-desc">
+    Captação, direção de fotografia e edição com olhar autoral. Cada projeto é construído do enquadramento ao corte final.
+  </p>
+</section>
 
-  <!-- RIGHT: Login -->
-  <div class="access">
-    <div class="deco-circle"></div>
-    <div class="deco-square"></div>
-
-    <!-- TOP -->
-    <div class="topbar anim anim-1">
-      <div class="logo">
-        <img src="assets/logo.png" alt="G">
-        <span class="logo-text">G. Studios</span>
-      </div>
-      <div class="topbar-right">
-        Filmmaking<br>
-        Cinematography<br>
-        Edition
-      </div>
-    </div>
-
-    <!-- FORM -->
-    <div class="form-zone">
-      <div class="eyebrow anim anim-2">Acesso restrito · 2026</div>
-
-      <h2 class="form-title anim anim-3">
-        Building<br>
-        <em>cinematic</em><br>
-        stories
-      </h2>
-
-      <p class="form-desc anim anim-4">
-        Portfólio selecionado com trabalhos de filmmaking, direção de fotografia, captação e edição. Digite a senha para acessar.
+<!-- ====== FEATURED (vídeo destaque tipo banner Netflix) ====== -->
+<section class="featured" id="work">
+  <div class="featured-wrap">
+    <img id="featuredImg" src="https://vumbnail.com/1195220819_large.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.55;filter:brightness(0.9);">
+    <div class="featured-content">
+      <div class="featured-tag">★ Showreel · 2024—2025</div>
+      <h2 class="featured-title">Selected<br>Works Reel</h2>
+      <p class="featured-desc">
+        Compilado cinematográfico reunindo trabalhos de captação, direção de fotografia, cobertura de eventos, filmes institucionais e edição audiovisual.
       </p>
-
-      <form id="loginForm" class="anim anim-4" autocomplete="off">
-        <div class="input-group">
-          <label class="input-label" for="pwd">Senha</label>
-          <div class="input-row">
-            <input type="password" id="pwd" name="pwd" placeholder="••••••••" required autofocus>
-          </div>
-          <div class="error-msg" id="err">Senha incorreta. Tente novamente.</div>
-        </div>
-
-        <button type="submit" class="submit-btn">
-          Acessar portfólio
-          <span class="arrow">→</span>
-        </button>
-      </form>
+      <button class="featured-play" onclick="openModal('reel')">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        Assistir reel
+      </button>
     </div>
+  </div>
+</section>
 
-    <!-- BOTTOM -->
-    <div class="bottombar anim anim-5">
-      <div class="roles">
-        <span>— Filmmaker</span>
-        <span>— Director of Photography</span>
-        <span>— Editor</span>
-      </div>
-      <div class="copyright">
-        ©2025—2026<br>
-        All rights reserved
+<!-- ====== FILTER BAR ====== -->
+<div class="filter-bar" id="filterBar">
+  <span class="filter-label">Filtrar por</span>
+  <button class="filter-btn active" data-filter="all">Todos <span class="count"></span></button>
+  <!-- demais botões gerados via JS -->
+</div>
+
+<!-- ====== ROWS (carrosséis por categoria) ====== -->
+<div class="rows" id="rows">
+  <!-- Os carrosséis são gerados via JS abaixo -->
+</div>
+
+<!-- ====== MODAL ====== -->
+<div class="modal" id="modal" onclick="if(event.target===this)closeModal()">
+  <div class="modal-content">
+    <button class="modal-close" onclick="closeModal()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+    </button>
+    <div id="modalVideo"></div>
+    <div class="modal-body">
+      <div class="modal-eyebrow" id="modalEyebrow"></div>
+      <h2 class="modal-title" id="modalTitle"></h2>
+      <div class="modal-grid">
+        <div class="modal-block">
+          <span class="label">Função</span>
+          <div class="modal-roles" id="modalRoles"></div>
+        </div>
+        <div class="modal-block">
+          <span class="label">Sobre o trabalho</span>
+          <p id="modalDesc"></p>
+        </div>
+        <div class="modal-block">
+          <span class="label">Detalhes</span>
+          <dl class="modal-meta" id="modalMeta"></dl>
+        </div>
       </div>
     </div>
   </div>
-
 </div>
+
+<!-- ====== FOOTER ====== -->
+<footer id="contact">
+  <h2 class="footer-cta">
+    Vamos<br>
+    <em>filmar</em> juntos?
+  </h2>
+  <div class="footer-contact">
+    <div>
+      <span class="col-label">E-mail</span>
+      <a href="mailto:contato@gstudios.com">contato@gstudios.com</a>
+    </div>
+    <div>
+      <span class="col-label">Redes</span>
+      <a href="#" target="_blank">Instagram ↗</a>
+      <a href="#" target="_blank">Behance ↗</a>
+      <a href="#" target="_blank">Vimeo ↗</a>
+    </div>
+    <div>
+      <span class="col-label">Localização</span>
+      <span>São Paulo, Brasil</span>
+      <span>Disponível para viagens</span>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025—2026 G. Studios</span>
+    <span>Crafted with care</span>
+  </div>
+</footer>
 
 <script>
   // ============================================
-  // SENHA — TROQUE AQUI
+  // SHOWREEL — vídeo do banner featured (não aparece nos carrosséis)
   // ============================================
-  // Para portfólio compartilhado com clientes, isso é suficiente.
-  // Para segurança REAL (criptografia), use StaticCrypt — veja README.
-  const SENHA_CORRETA = "V";
+  const REEL = {
+    id: 'reel',
+    title: 'Selected Works Reel',
+    year: '2024—2025',
+    client: 'Showreel · G. Studios',
+    format: 'h',
+    videos: { h: '1195220819' },
+    roles: ['Captação de imagens','Direção de fotografia','Edição','Pós-produção','Narrativa visual'],
+    desc: 'Compilado cinematográfico reunindo diferentes trabalhos de captação, direção de fotografia, cobertura de eventos, filmes institucionais e edição audiovisual. Seleção de projetos desenvolvidos para marcas, eventos, produções corporativas e conteúdos publicitários.',
+    meta: {
+      'Período': '2024—2025',
+      'Tipo': 'Showreel / Compilado',
+      'Escopo': 'Marcas, eventos,\ncorporativos, publicitário'
+    }
+  };
+
   // ============================================
+  // BANCO DE PROJETOS
+  // ============================================
+  // Para adicionar novo projeto, copie um objeto e cole.
+  // Categorias: marketing, eventos, sameday, mobile, institucional, videoclipes, social
+  // Formato: 'h' (horizontal), 'v' (vertical), 'both' (ambos)
+  // ============================================
+  const PROJECTS = [
+    {
+      id: 'p01',
+      title: 'Ação Outubro Rosa — Betano',
+      year: '2025',
+      client: 'Zero Gravidade Produtora Audiovisual',
+      categories: ['marketing','eventos','social','sameday'],
+      format: 'v',
+      videos: { v: '1195173058' },
+      roles: ['Coordenação geral','Direção executiva','Direção artística'],
+      desc: 'Produção fotográfica e desenvolvimento de peça audiovisual de até 2 minutos para Instagram, criada para a campanha Outubro Rosa. Acompanhamento de todas as etapas do projeto, da pré-produção à pós-produção. Produção completa realizada pela Zero Gravidade Produtora Audiovisual.',
+      meta: {
+        'Cliente': 'Zero Gravidade',
+        'Cliente final': 'Betano',
+        'Plataforma': 'Instagram',
+        'Duração': 'até 2 min'
+      }
+    },
+    {
+      id: 'p02',
+      title: 'Entrega do Troféu — Cainã Gartner × Betano',
+      year: '2025',
+      client: 'Zero Gravidade Produtora Audiovisual',
+      categories: ['marketing','eventos','social','sameday'],
+      format: 'v',
+      videos: { v: '1195176620' },
+      roles: ['Coordenação geral','Direção executiva','Direção artística','Pós-produção','Edição'],
+      desc: 'Cobertura audiovisual da entrega do troféu de Melhor Jogador da Partida, produzido pelo artista Cainã Gartner. Acompanhamento de todas as etapas da produção. Produção completa realizada pela Zero Gravidade Produtora Audiovisual.',
+      meta: {
+        'Cliente': 'Zero Gravidade',
+        'Cliente final': 'Betano',
+        'Artista': 'Cainã Gartner',
+        'Formato': 'Vertical 9:16'
+      }
+    },
+    {
+      id: 'p03',
+      title: 'Bar do Galo — Atlético vs Vasco × Betano',
+      year: '2025',
+      client: 'Zero Gravidade Produtora Audiovisual',
+      categories: ['marketing','eventos','social','sameday'],
+      format: 'v',
+      videos: { v: '1195178133' },
+      roles: ['Coordenação geral','Direção executiva','Direção artística','Pós-produção','Edição'],
+      desc: 'Cobertura audiovisual da ação realizada no Bar do Galo durante a partida entre Atlético Mineiro vs Vasco. Produção completa realizada pela Zero Gravidade Produtora Audiovisual.',
+      meta: {
+        'Cliente': 'Zero Gravidade',
+        'Cliente final': 'Betano',
+        'Evento': 'Atlético-MG × Vasco',
+        'Formato': 'Vertical 9:16'
+      }
+    },
+    {
+      id: 'p04',
+      title: 'Advantage VIP Lounge — Filme de Fim de Ano',
+      year: '2025',
+      client: 'Guilherme Pires',
+      categories: ['institucional','marketing','social'],
+      format: 'v',
+      videos: { v: '1195180111' },
+      roles: ['Direção criativa','Solução em IA','Roteirização','Direção artística','Pós-produção','Edição'],
+      desc: 'Filme institucional de fim de ano com workflow audiovisual baseado em inteligência artificial de alta resolução. A campanha exigia captação em múltiplas unidades do lounge pelo Brasil — operação logística complexa e de alto custo. Solução desenvolvida: a partir de fotografias fornecidas pelo cliente, as unidades foram recriadas cinematograficamente via IA, com geração de cenas, cenários virtuais, narrativa visual e locução.',
+      meta: {
+        'Cliente': 'Guilherme Pires',
+        'Cliente final': 'Advantage VIP Lounge',
+        'Workflow': 'IA generativa + pós',
+        'Formato': 'Vertical 9:16'
+      }
+    },
+    {
+      id: 'p05',
+      title: 'Rafa Ferreira × Gree do Brasil',
+      year: '2025',
+      client: 'Zero Gravidade Produtora Audiovisual',
+      categories: ['marketing','social'],
+      format: 'v',
+      videos: { v: '1195208035' },
+      roles: ['Pré-produção','Produção','Direção de fotografia','Fotografia','Pós-produção','Edição'],
+      desc: 'Produção audiovisual para anúncio da parceria entre a piloto Rafa Ferreira e a Gree do Brasil. Produção audiovisual realizada pela Zero Gravidade Produtora Audiovisual.',
+      meta: {
+        'Cliente': 'Zero Gravidade',
+        'Cliente final': 'Gree do Brasil',
+        'Piloto': 'Rafa Ferreira',
+        'Formato': 'Vertical 9:16'
+      }
+    },
+    {
+      id: 'p06',
+      title: 'Porsche Cayman S — Automotive Film',
+      year: '2025',
+      client: 'Carframe Mídia',
+      categories: ['social'],
+      format: 'v',
+      videos: { v: '1195214124' },
+      roles: ['Captação cinematográfica','Edição de imagens'],
+      desc: 'Produção audiovisual de Porsche Cayman S para colecionador particular de veículos. Produção audiovisual realizada para Carframe Mídia.',
+      meta: {
+        'Cliente': 'Carframe Mídia',
+        'Veículo': 'Porsche Cayman S',
+        'Tipo': 'Colecionador particular',
+        'Formato': 'Vertical 9:16'
+      }
+    },
+    {
+      id: 'p07',
+      title: 'Credit AI — Event Coverage',
+      year: '2025',
+      client: 'Sense / Zero Gravidade Produtora Audiovisual',
+      categories: ['eventos','sameday','social'],
+      format: 'v',
+      videos: { v: '1195217597' },
+      roles: ['Cobertura completa do evento','Captação audiovisual','Same Day Edit'],
+      desc: 'Cobertura audiovisual de evento corporativo Credit AI com produção de conteúdo dinâmico para redes sociais e comunicação institucional. Cobertura completa do evento corporativo com captação audiovisual e entrega de same day edit.',
+      meta: {
+        'Cliente': 'Sense / Zero Gravidade',
+        'Cliente final': 'Wekoos AI, Morada AI',
+        'Evento': 'Credit AI',
+        'Formato': 'Vertical 9:16'
+      }
+    },
+    {
+      id: 'p08',
+      title: 'COFECI•CRECI — CIMI360',
+      year: '2025',
+      client: 'Zero Gravidade Produtora Audiovisual',
+      categories: ['mobile','eventos','sameday','social','institucional'],
+      format: 'v',
+      videos: { v: '1195397806' },
+      roles: ['Captação mobile','Cobertura de evento','Criação de conteúdo vertical','Edição rápida para publicação em tempo real'],
+      desc: 'Cobertura mobile da participação do Sistema COFECI•CRECI no evento CIMI360, com produção de conteúdo dinâmico para redes sociais e comunicação institucional durante o evento. Produção audiovisual realizada pela Zero Gravidade Produtora Audiovisual.',
+      meta: {
+        'Cliente': 'Zero Gravidade',
+        'Cliente final': 'Sistema COFECI•CRECI',
+        'Evento': 'CIMI360',
+        'Captação': 'Mobile',
+        'Formato': 'Vertical 9:16'
+      }
+    }
+  ];
 
-  const form = document.getElementById('loginForm');
-  const input = document.getElementById('pwd');
-  const err = document.getElementById('err');
+  // ============ CATEGORIAS ============
+  const CATEGORIES = [
+    { slug: 'marketing',    label: 'Ações de Marketing' },
+    { slug: 'eventos',      label: 'Cobertura de Eventos' },
+    { slug: 'sameday',      label: 'Same Day Edit' },
+    { slug: 'mobile',       label: 'Mobile' },
+    { slug: 'institucional',label: 'Institucional' },
+    { slug: 'videoclipes',  label: 'Videoclipes' },
+    { slug: 'social',       label: 'Mídias Sociais' }
+  ];
 
-  // se já está autenticado nesta sessão, vai direto
-  if (sessionStorage.getItem('gst_access') === 'ok') {
-    window.location.href = 'portfolio.html';
+  // ============ HELPERS ============
+  function getById(id) {
+    if (id === 'reel') return REEL;
+    return PROJECTS.find(p => p.id === id);
   }
 
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    if (input.value === SENHA_CORRETA) {
-      sessionStorage.setItem('gst_access', 'ok');
-      document.querySelector('.access').style.transition = 'opacity 0.4s';
-      document.querySelector('.access').style.opacity = '0';
-      setTimeout(() => {
-        window.location.href = 'portfolio.html';
-      }, 400);
+  // Thumbnail Vimeo (poster + autoplay muted como preview)
+  function vimeoEmbed(id, opts = {}) {
+    const params = new URLSearchParams({
+      title: 0, byline: 0, portrait: 0,
+      ...(opts.background ? { background: 1, muted: 1, autoplay: 1, loop: 1 } : {})
+    });
+    return `https://player.vimeo.com/video/${id}?${params.toString()}`;
+  }
+
+  // ============ RENDER ROWS ============
+  function renderRows(filter = 'all') {
+    const rowsEl = document.getElementById('rows');
+    rowsEl.innerHTML = '';
+
+    if (filter === 'all') {
+      // Modo padrão: um carrossel por categoria (vídeos podem se repetir)
+      CATEGORIES.forEach(cat => {
+        const list = PROJECTS.filter(p => p.categories.includes(cat.slug));
+        if (list.length === 0) return;
+
+        const trackId = `track-${cat.slug}`;
+        const row = document.createElement('section');
+        row.className = 'row';
+        row.innerHTML = `
+          <div class="row-header">
+            <h3 class="row-title">${cat.label} <span class="count">${String(list.length).padStart(2,'0')}</span></h3>
+            <div class="row-nav">
+              <button onclick="scrollRow('${trackId}', -1)" aria-label="Anterior">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+              </button>
+              <button onclick="scrollRow('${trackId}', 1)" aria-label="Próximo">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              </button>
+            </div>
+          </div>
+          <div class="row-track" id="${trackId}">
+            ${list.map(p => cardHTML(p)).join('')}
+          </div>
+        `;
+        rowsEl.appendChild(row);
+      });
     } else {
-      err.classList.add('show');
-      input.value = '';
-      input.focus();
-      // shake animation
-      input.parentElement.animate(
-        [{ transform: 'translateX(0)' },{ transform: 'translateX(-8px)' },{ transform: 'translateX(8px)' },{ transform: 'translateX(0)' }],
-        { duration: 300 }
-      );
+      // Modo filtrado: um único carrossel com vídeos daquela categoria (sem repetição)
+      const cat = CATEGORIES.find(c => c.slug === filter);
+      const list = PROJECTS.filter(p => p.categories.includes(filter));
+      const trackId = `track-${filter}`;
+
+      const row = document.createElement('section');
+      row.className = 'row';
+      row.innerHTML = `
+        <div class="row-header">
+          <h3 class="row-title">${cat.label} <span class="count">${String(list.length).padStart(2,'0')}</span></h3>
+          <div class="row-nav">
+            <button onclick="scrollRow('${trackId}', -1)" aria-label="Anterior">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            </button>
+            <button onclick="scrollRow('${trackId}', 1)" aria-label="Próximo">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
+          </div>
+        </div>
+        <div class="row-track" id="${trackId}">
+          ${list.map(p => cardHTML(p)).join('')}
+        </div>
+      `;
+      rowsEl.appendChild(row);
     }
+
+    // anima entrada das rows
+    document.querySelectorAll('.row').forEach(r => obs.observe(r));
+
+    // recarrega thumbs sempre que rerenderizar
+    hydrateThumbs();
+  }
+
+  // ============ FILTROS ============
+  function renderFilterButtons() {
+    const bar = document.getElementById('filterBar');
+    // Mantém o botão "Todos" + label
+    const allBtn = bar.querySelector('.filter-btn[data-filter="all"]');
+    if (allBtn) {
+      allBtn.querySelector('.count').textContent = `(${String(PROJECTS.length).padStart(2,'0')})`;
+    }
+
+    // Adiciona um botão por categoria que tenha pelo menos 1 vídeo
+    CATEGORIES.forEach(cat => {
+      const count = PROJECTS.filter(p => p.categories.includes(cat.slug)).length;
+      if (count === 0) return;
+
+      const btn = document.createElement('button');
+      btn.className = 'filter-btn';
+      btn.dataset.filter = cat.slug;
+      btn.innerHTML = `${cat.label} <span class="count">(${String(count).padStart(2,'0')})</span>`;
+      bar.appendChild(btn);
+    });
+
+    // Listeners
+    bar.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        bar.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        renderRows(btn.dataset.filter);
+        // scroll suave até a primeira row
+        document.getElementById('rows').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+  }
+
+  function cardHTML(p) {
+    const isVertical = p.format === 'v';
+    const vid = p.videos.h || p.videos.v;
+    const formatLabel = p.format === 'h' ? '16:9 · Horizontal'
+                      : p.format === 'v' ? '9:16 · Vertical'
+                      : '16:9 + 9:16';
+    const cardClass = isVertical ? 'v' : 'h';
+    return `
+      <div class="card ${cardClass}" onclick="openModal('${p.id}')">
+        <div class="card-thumb">
+          <div class="thumb-skeleton"></div>
+          <img src="https://vumbnail.com/${vid}_large.jpg"
+               alt="${p.title}"
+               loading="lazy"
+               class="thumb-img"
+               style="opacity:0">
+        </div>
+        <div class="card-play">
+          <div class="card-play-icon">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+        </div>
+        <div class="card-info">
+          <span class="card-format">${formatLabel}</span>
+          <div class="card-title">${p.title}</div>
+          <div class="card-client">${p.year} · ${p.client}</div>
+        </div>
+      </div>
+    `;
+  }
+
+  // Faz fade-in da imagem quando ela carrega (sem cálculo de largura)
+  function hydrateThumbs() {
+    const imgs = document.querySelectorAll('.thumb-img');
+    imgs.forEach(img => {
+      const finish = () => {
+        const skel = img.parentElement.querySelector('.thumb-skeleton');
+        if (skel) skel.remove();
+        img.style.opacity = '1';
+      };
+      if (img.complete && img.naturalWidth > 0) {
+        finish();
+      } else {
+        img.addEventListener('load', finish);
+        img.addEventListener('error', () => img.style.display = 'none');
+      }
+    });
+  }
+
+  function hydrateFeatured() {
+    const el = document.getElementById('featuredImg');
+    if (el) el.src = `https://vumbnail.com/${REEL.videos.h}_large.jpg`;
+  }
+
+  // scroll horizontal das rows
+  function scrollRow(trackId, dir) {
+    const track = document.getElementById(trackId);
+    const card = track.querySelector('.card');
+    if (!card) return;
+    const step = card.offsetWidth + 14; // largura + gap
+    track.scrollBy({ left: step * 2 * dir, behavior: 'smooth' });
+  }
+
+  // ============ MODAL ============
+  function openModal(id) {
+    const p = getById(id);
+    if (!p) return;
+    const modal = document.getElementById('modal');
+    const videoEl = document.getElementById('modalVideo');
+
+    // monta video (autoplay quando abre o modal)
+    let videoHTML = '';
+    if (p.format === 'both') {
+      videoHTML = `
+        <div class="modal-video-wrap both">
+          <div class="mv-h"><iframe src="${vimeoEmbed(p.videos.h)}&autoplay=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div>
+          <div class="mv-v"><iframe src="${vimeoEmbed(p.videos.v)}" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div>
+        </div>`;
+    } else {
+      const vid = p.videos.h || p.videos.v;
+      videoHTML = `<div class="modal-video-wrap ${p.format}"><iframe src="${vimeoEmbed(vid)}&autoplay=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div>`;
+    }
+    videoEl.innerHTML = videoHTML;
+
+    document.getElementById('modalEyebrow').textContent = `${p.year} · ${p.client}`;
+    document.getElementById('modalTitle').textContent = p.title;
+    document.getElementById('modalRoles').innerHTML = p.roles.map(r => `<span>${r}</span>`).join('');
+    document.getElementById('modalDesc').textContent = p.desc;
+    document.getElementById('modalMeta').innerHTML =
+      Object.entries(p.meta).map(([k,v]) => `<dt>${k}</dt><dd>${v}</dd>`).join('');
+
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    const modal = document.getElementById('modal');
+    modal.classList.remove('open');
+    document.getElementById('modalVideo').innerHTML = ''; // para os vídeos
+    document.body.style.overflow = '';
+  }
+
+  // ESC fecha modal
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeModal();
   });
 
-  input.addEventListener('input', () => err.classList.remove('show'));
+  // ============ REVEAL ON SCROLL ============
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  // ============ INIT ============
+  document.getElementById('totalCount').textContent = String(PROJECTS.length).padStart(2,'0');
+  renderFilterButtons();
+  renderRows('all');
+  hydrateFeatured();
 </script>
 
 </body>
