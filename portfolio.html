@@ -367,17 +367,23 @@
 
   .row-track::-webkit-scrollbar { display: none; }
 
-  /* Card — altura fixa, largura se adapta à thumbnail */
+  /* Card — altura fixa, largura calculada via JS quando a thumb carrega */
   .card {
     flex: 0 0 auto;
     height: 340px;
+    width: 200px; /* default enquanto carrega (proporção 9:16) */
     background: var(--bg-deep);
     border-radius: 5px;
     overflow: hidden;
     position: relative;
     cursor: pointer;
-    transition: transform 0.3s cubic-bezier(.2,.7,.2,1), box-shadow 0.3s;
+    transition: transform 0.3s cubic-bezier(.2,.7,.2,1), box-shadow 0.3s, width 0.4s ease;
     border: 1px solid rgba(232, 226, 213, 0.06);
+  }
+
+  /* Card horizontal default (16:9) enquanto carrega */
+  .card.h-default {
+    width: 605px;
   }
 
   .card:hover {
@@ -387,8 +393,8 @@
   }
 
   .card-thumb {
-    position: relative;
-    height: 100%;
+    position: absolute;
+    inset: 0;
     background: var(--bg-deep);
     display: flex;
     align-items: center;
@@ -396,10 +402,12 @@
     overflow: hidden;
   }
 
-  /* Imagem ocupa altura total, largura proporcional. Card cresce junto. */
+  /* Imagem preenche o card; como o card tem proporção correta (setada via JS), não há crop */
   .card-thumb img {
+    width: 100%;
     height: 100%;
-    width: auto;
+    object-fit: cover;
+    object-position: center;
     display: block;
     transition: filter 0.4s;
     filter: brightness(0.92);
@@ -409,10 +417,10 @@
     filter: brightness(1.05);
   }
 
-  /* Skeleton: tamanho default enquanto carrega */
+  /* Skeleton enquanto carrega */
   .thumb-skeleton {
-    height: 100%;
-    width: 200px; /* largura provisória de 9:16; será substituída pela imagem */
+    position: absolute;
+    inset: 0;
     background: linear-gradient(110deg,
       rgba(232, 226, 213, 0.04) 30%,
       rgba(232, 226, 213, 0.10) 50%,
@@ -786,8 +794,8 @@
     .featured-desc { max-width: 100%; font-size: 14px; }
     .row-header { padding: 0 20px; }
     .row-track { padding: 8px 20px; gap: 10px; }
-    .card { height: 260px; }
-    .thumb-skeleton { width: 150px; }
+    .card { height: 260px; width: 150px; }
+    .card.h-default { width: 460px; }
     .row-title { font-size: 18px; }
     .modal { padding: 20px 12px; }
     .modal-body { padding: 24px 20px 28px; }
@@ -1149,8 +1157,10 @@
     const formatLabel = p.format === 'h' ? '16:9 · Horizontal'
                       : p.format === 'v' ? '9:16 · Vertical'
                       : '16:9 + 9:16';
+    // Card horizontal abre com largura maior; vertical com menor (default no CSS)
+    const cardClass = !isVertical ? 'h-default' : '';
     return `
-      <div class="card ${isVertical ? 'v' : ''}" onclick="openModal('${p.id}')">
+      <div class="card ${cardClass}" data-card-id="${p.id}" onclick="openModal('${p.id}')">
         <div class="card-thumb" data-vid="${vid}">
           <div class="thumb-skeleton"></div>
         </div>
@@ -1169,8 +1179,6 @@
   }
 
   // ============ THUMBNAILS via Vimeo oEmbed (proporção nativa) ============
-  // O Vimeo oEmbed retorna a capa na proporção real do vídeo
-  // (9:16 para verticais, 16:9 para horizontais). vumbnail.com sempre dá 16:9.
   async function fetchVimeoThumb(id) {
     const cacheKey = `vthumb_${id}`;
     const cached = sessionStorage.getItem(cacheKey);
@@ -1180,35 +1188,47 @@
       if (!res.ok) throw new Error('http ' + res.status);
       const data = await res.json();
       let url = data.thumbnail_url || '';
-      // pega versão em maior resolução
       url = url.replace(/_\d+x\d+/, '_1280');
       if (url) sessionStorage.setItem(cacheKey, url);
       return url;
     } catch (e) {
-      // fallback: vumbnail.com (sempre funciona, mas 16:9)
       return `https://vumbnail.com/${id}_large.jpg`;
     }
   }
 
   async function hydrateThumbs() {
     const thumbs = document.querySelectorAll('.card-thumb[data-vid]');
-    // carrega em paralelo com Promise.all
+    const CARD_HEIGHT = window.innerWidth <= 900 ? 260 : 340;
+
     await Promise.all(Array.from(thumbs).map(async (el) => {
       const id = el.dataset.vid;
       const url = await fetchVimeoThumb(id);
       if (!url) return;
+
       const img = new Image();
       img.alt = '';
       img.loading = 'lazy';
+
       img.onload = () => {
+        // Calcula a largura proporcional do card baseado na proporção real da imagem
+        const ratio = img.naturalWidth / img.naturalHeight;
+        const cardWidth = Math.round(CARD_HEIGHT * ratio);
+        const card = el.closest('.card');
+        if (card) {
+          card.style.width = cardWidth + 'px';
+          card.classList.remove('h-default'); // remove default depois que calculou
+        }
+        // Substitui o skeleton pela imagem
         const skel = el.querySelector('.thumb-skeleton');
         if (skel) skel.remove();
         el.appendChild(img);
       };
+
       img.onerror = () => {
-        // fallback final
+        // fallback final pro vumbnail
         img.src = `https://vumbnail.com/${id}_large.jpg`;
       };
+
       img.src = url;
     }));
   }
