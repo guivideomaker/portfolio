@@ -10,19 +10,18 @@
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0F2A30;        /* azul-petróleo profundo */
-    --bg-deep: #081A1E;   /* mais escuro (footer/hover) */
-    --bg-soft: #143840;   /* variação suave (cards) */
-    --ink: #E8E2D5;       /* off-white quente */
-    --accent: #C7A87A;    /* dourado dessaturado */
-    --accent-2: #4A8B92;  /* turquesa apagado */
-    --accent-3: #B89968;  /* dourado mais profundo */
-    --muted: #7A8A8C;     /* azul-acinzentado */
+    --bg: #0F2A30;
+    --bg-deep: #081A1E;
+    --bg-soft: #143840;
+    --ink: #E8E2D5;
+    --accent: #C7A87A;
+    --accent-2: #4A8B92;
+    --accent-3: #B89968;
+    --muted: #7A8A8C;
     --card: #143840;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
-
   html { scroll-behavior: smooth; }
 
   body {
@@ -32,7 +31,6 @@
     overflow-x: hidden;
   }
 
-  /* grain */
   body::before {
     content: '';
     position: fixed;
@@ -48,7 +46,7 @@
   nav {
     position: fixed;
     top: 0; left: 0; right: 0;
-    padding: 20px 40px;
+    padding: 18px 40px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -65,7 +63,7 @@
   }
 
   .nav-logo img {
-    width: 34px; height: 34px;
+    width: 30px; height: 30px;
     border-radius: 50%;
     filter: invert(1);
   }
@@ -89,7 +87,6 @@
   .nav-links a {
     color: var(--ink);
     text-decoration: none;
-    position: relative;
     transition: color 0.2s;
   }
 
@@ -113,41 +110,44 @@
     color: var(--bg-deep);
   }
 
-  /* ============ HERO ============ */
+  /* ============ HERO COMPACTO ============ */
   .hero {
-    min-height: 100vh;
-    padding: 140px 40px 80px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    padding: 110px 40px 30px;
     position: relative;
   }
 
   .hero-eyebrow {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.2em;
+    font-size: 10px;
+    letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--accent);
     display: flex;
     align-items: center;
     gap: 12px;
+    margin-bottom: 16px;
   }
 
   .hero-eyebrow::before {
     content: '';
-    width: 32px;
+    width: 28px;
     height: 1px;
     background: var(--accent);
   }
 
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 60px;
+    align-items: end;
+  }
+
   .hero-title {
     font-family: 'Anton', sans-serif;
-    font-size: clamp(80px, 16vw, 240px);
-    line-height: 0.82;
-    letter-spacing: -0.04em;
+    font-size: clamp(40px, 5.5vw, 78px);
+    line-height: 1;
+    letter-spacing: -0.025em;
     text-transform: uppercase;
-    margin-top: 32px;
   }
 
   .hero-title em {
@@ -156,184 +156,443 @@
     font-weight: 400;
     color: var(--accent);
     text-transform: none;
-    letter-spacing: -0.02em;
-    display: inline-block;
-    transform: translateY(-0.08em);
+    letter-spacing: -0.01em;
   }
 
-  .hero-bottom {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 60px;
-    align-items: end;
-    margin-top: 60px;
-  }
-
-  .hero-desc {
-    font-size: 22px;
-    line-height: 1.4;
-    max-width: 480px;
-    grid-column: span 2;
-  }
-
-  .hero-stats {
+  .hero-meta {
     display: flex;
-    flex-direction: column;
-    gap: 8px;
+    gap: 32px;
     font-family: 'JetBrains Mono', monospace;
     font-size: 10px;
     letter-spacing: 0.15em;
     text-transform: uppercase;
-    text-align: right;
+    padding-bottom: 8px;
   }
 
-  .hero-stats span { color: var(--muted); }
-  .hero-stats strong { color: var(--ink); font-weight: 500; }
+  .hero-meta-item span { display: block; color: var(--muted); margin-bottom: 4px; }
+  .hero-meta-item strong { color: var(--ink); font-weight: 500; }
 
-  /* marquee */
-  .marquee {
-    margin-top: 100px;
-    overflow: hidden;
-    white-space: nowrap;
-    border-top: 1px solid rgba(232, 226, 213, 0.15);
-    border-bottom: 1px solid rgba(232, 226, 213, 0.15);
-    padding: 14px 0;
-  }
-
-  .marquee-track {
-    display: inline-block;
-    animation: marquee 40s linear infinite;
-    font-family: 'Anton', sans-serif;
-    font-size: 22px;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-  }
-
-  .marquee-track span {
-    margin: 0 24px;
+  .hero-desc {
+    font-size: 17px;
+    line-height: 1.45;
     color: var(--ink);
+    max-width: 480px;
+    margin-top: 18px;
+    opacity: 0.85;
   }
 
-  .marquee-track .dot {
-    color: var(--accent);
-    font-size: 14px;
-    vertical-align: middle;
+  /* ============ FEATURED (vídeo destaque grande) ============ */
+  .featured {
+    padding: 30px 40px 20px;
+    position: relative;
   }
 
-  @keyframes marquee {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
+  .featured-wrap {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 21 / 9;
+    overflow: hidden;
+    border-radius: 6px;
+    background: var(--bg-deep);
+    border: 1px solid rgba(232, 226, 213, 0.08);
   }
 
-  /* ============ SECTION HEADERS ============ */
-  .section-header {
-    padding: 100px 40px 40px;
+  .featured-bg {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #143840 0%, #081A1E 100%);
     display: flex;
-    justify-content: space-between;
-    align-items: end;
-    border-top: 1px solid rgba(232, 226, 213, 0.1);
-  }
-
-  .section-num {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.2em;
-    color: var(--muted);
-  }
-
-  .section-title {
-    font-family: 'Anton', sans-serif;
-    font-size: clamp(48px, 7vw, 96px);
-    line-height: 0.9;
-    text-transform: uppercase;
-    letter-spacing: -0.03em;
-  }
-
-  .section-title em {
-    font-family: 'Instrument Serif', serif;
-    font-style: italic;
-    font-weight: 400;
-    color: var(--accent);
-    text-transform: none;
-  }
-
-  /* ============ PROJECTS ============ */
-  .projects {
-    padding: 40px 40px 100px;
-    display: flex;
-    flex-direction: column;
-    gap: 120px;
-  }
-
-  .project {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 32px;
-  }
-
-  .project-header {
-    display: grid;
-    grid-template-columns: auto 1fr auto;
-    gap: 24px;
-    align-items: end;
-    padding-bottom: 20px;
-    border-bottom: 1px solid rgba(232, 226, 213, 0.15);
-  }
-
-  .project-num {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.2em;
-    color: var(--muted);
-  }
-
-  .project-title {
-    font-family: 'Anton', sans-serif;
-    font-size: clamp(40px, 5.5vw, 76px);
-    line-height: 0.95;
-    text-transform: uppercase;
-    letter-spacing: -0.025em;
-  }
-
-  .project-year {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.15em;
-    color: var(--muted);
-    text-align: right;
-  }
-
-  /* Video layouts */
-  .video-layout {
-    display: grid;
-    gap: 16px;
-  }
-
-  .video-layout.horizontal {
-    grid-template-columns: 1fr;
-  }
-
-  .video-layout.both {
-    grid-template-columns: 2.2fr 1fr;
-  }
-
-  .video-layout.vertical {
-    grid-template-columns: minmax(280px, 480px);
+    align-items: center;
     justify-content: center;
   }
 
-  .video-wrap {
-    position: relative;
-    overflow: hidden;
+  .featured-content {
+    position: absolute;
+    inset: 0;
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    background: linear-gradient(90deg, rgba(8,26,30,0.95) 0%, rgba(8,26,30,0.6) 50%, transparent 100%);
+    z-index: 5;
+  }
+
+  .featured-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+
+  .featured-title {
+    font-family: 'Anton', sans-serif;
+    font-size: clamp(36px, 5vw, 64px);
+    line-height: 0.95;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    max-width: 60%;
+    margin-bottom: 12px;
+  }
+
+  .featured-desc {
+    font-size: 16px;
+    line-height: 1.45;
+    max-width: 50%;
+    color: var(--ink);
+    opacity: 0.85;
+    margin-bottom: 20px;
+  }
+
+  .featured-play {
+    background: var(--ink);
+    color: var(--bg-deep);
+    border: none;
+    padding: 12px 22px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    align-self: flex-start;
+    transition: all 0.25s;
+  }
+
+  .featured-play:hover {
+    background: var(--accent);
+    gap: 14px;
+  }
+
+  .featured-play svg { width: 10px; height: 10px; }
+
+  /* video bg do hero (poster blur) */
+  .featured-poster {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    filter: blur(0px) brightness(0.45);
+  }
+
+  /* ============ ROWS NETFLIX ============ */
+  .rows {
+    padding: 30px 0 60px;
+  }
+
+  .row {
+    margin-bottom: 36px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .row.visible { opacity: 1; transform: translateY(0); }
+
+  .row-header {
+    padding: 0 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 14px;
+  }
+
+  .row-title {
+    font-family: 'Anton', sans-serif;
+    font-size: 22px;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .row-title .count {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.15em;
+    font-weight: 400;
+  }
+
+  .row-nav {
+    display: flex;
+    gap: 8px;
+  }
+
+  .row-nav button {
+    width: 32px;
+    height: 32px;
+    border: 1px solid rgba(232, 226, 213, 0.2);
+    background: transparent;
+    color: var(--ink);
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+  }
+
+  .row-nav button:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .row-nav button:disabled {
+    opacity: 0.3;
+    cursor: default;
+  }
+
+  .row-nav button:disabled:hover {
+    border-color: rgba(232, 226, 213, 0.2);
+    color: var(--ink);
+  }
+
+  /* track horizontal */
+  .row-track {
+    display: flex;
+    gap: 14px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    padding: 8px 40px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .row-track::-webkit-scrollbar { display: none; }
+
+  /* Card — altura fixa, largura se adapta à thumbnail */
+  .card {
+    flex: 0 0 auto;
+    height: 340px;
     background: var(--bg-deep);
-    border-radius: 4px;
+    border-radius: 5px;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.3s cubic-bezier(.2,.7,.2,1), box-shadow 0.3s;
     border: 1px solid rgba(232, 226, 213, 0.06);
   }
 
-  .video-wrap.h { aspect-ratio: 16 / 9; }
-  .video-wrap.v { aspect-ratio: 9 / 16; }
+  .card:hover {
+    transform: translateY(-4px);
+    z-index: 10;
+    box-shadow: 0 16px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(199, 168, 122, 0.4);
+  }
 
-  .video-wrap iframe {
+  .card-thumb {
+    position: relative;
+    height: 100%;
+    background: var(--bg-deep);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  /* Imagem ocupa altura total, largura proporcional. Card cresce junto. */
+  .card-thumb img {
+    height: 100%;
+    width: auto;
+    display: block;
+    transition: filter 0.4s;
+    filter: brightness(0.92);
+  }
+
+  .card:hover .card-thumb img {
+    filter: brightness(1.05);
+  }
+
+  /* Skeleton: tamanho default enquanto carrega */
+  .thumb-skeleton {
+    height: 100%;
+    width: 200px; /* largura provisória de 9:16; será substituída pela imagem */
+    background: linear-gradient(110deg,
+      rgba(232, 226, 213, 0.04) 30%,
+      rgba(232, 226, 213, 0.10) 50%,
+      rgba(232, 226, 213, 0.04) 70%);
+    background-size: 200% 100%;
+    animation: shimmer 1.4s linear infinite;
+  }
+
+  @keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+
+  /* play overlay no card */
+  .card-play {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(180deg, transparent 40%, rgba(8,26,30,0.85) 100%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: 3;
+  }
+
+  .card:hover .card-play { opacity: 1; }
+
+  .card-play-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: var(--bg-deep);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 8px;
+  }
+
+  /* card info (sempre visível embaixo) */
+  .card-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 14px;
+    background: linear-gradient(180deg, transparent 0%, rgba(8,26,30,0.95) 70%);
+    z-index: 4;
+    pointer-events: none;
+  }
+
+  .card-format {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 5px;
+    display: inline-block;
+    padding: 3px 7px;
+    border: 1px solid rgba(199, 168, 122, 0.3);
+    border-radius: 2px;
+  }
+
+  .card-title {
+    font-family: 'Anton', sans-serif;
+    font-size: 16px;
+    line-height: 1.05;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+
+  .card-client {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  /* ============ MODAL ============ */
+  .modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(8, 26, 30, 0.92);
+    backdrop-filter: blur(8px);
+    z-index: 1000;
+    display: none;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 60px 20px;
+    overflow-y: auto;
+  }
+
+  .modal.open { display: flex; }
+
+  .modal-content {
+    background: var(--bg);
+    border: 1px solid rgba(232, 226, 213, 0.1);
+    border-radius: 8px;
+    max-width: 1100px;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    animation: modalIn 0.35s cubic-bezier(.2,.7,.2,1);
+  }
+
+  @keyframes modalIn {
+    from { opacity: 0; transform: translateY(20px) scale(0.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: rgba(8, 26, 30, 0.7);
+    border: 1px solid rgba(232, 226, 213, 0.2);
+    color: var(--ink);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 20;
+    transition: all 0.2s;
+    backdrop-filter: blur(6px);
+  }
+
+  .modal-close:hover {
+    background: var(--accent);
+    color: var(--bg-deep);
+    border-color: var(--accent);
+  }
+
+  .modal-video-wrap {
+    position: relative;
+    background: var(--bg-deep);
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .modal-video-wrap.h { aspect-ratio: 16 / 9; }
+
+  .modal-video-wrap.v {
+    aspect-ratio: 9 / 16;
+    max-width: 480px;
+    margin: 0 auto;
+    display: block;
+  }
+
+  .modal-video-wrap.both {
+    display: grid;
+    grid-template-columns: 2.2fr 1fr;
+    gap: 12px;
+    aspect-ratio: auto;
+    padding: 12px;
+  }
+
+  .modal-video-wrap.both .mv-h {
+    aspect-ratio: 16 / 9;
+    position: relative;
+    background: var(--bg-deep);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .modal-video-wrap.both .mv-v {
+    aspect-ratio: 9 / 16;
+    position: relative;
+    background: var(--bg-deep);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .modal-video-wrap iframe {
     position: absolute;
     inset: 0;
     width: 100%;
@@ -341,83 +600,83 @@
     border: none;
   }
 
-  .video-wrap .placeholder {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 14px;
-    background: linear-gradient(135deg, #143840 0%, #081A1E 100%);
-    color: rgba(232, 226, 213, 0.4);
+  .modal-body {
+    padding: 36px 40px 44px;
+  }
+
+  .modal-eyebrow {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.2em;
+    font-size: 10px;
+    letter-spacing: 0.22em;
     text-transform: uppercase;
-    text-align: center;
-    padding: 20px;
-  }
-
-  .video-wrap .placeholder svg {
-    opacity: 0.4;
-  }
-
-  .video-tag {
-    position: absolute;
-    top: 14px;
-    left: 14px;
-    background: var(--bg-deep);
     color: var(--accent);
-    padding: 6px 10px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    z-index: 10;
-    border: 1px solid rgba(199, 168, 122, 0.3);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
   }
 
-  /* Project info */
-  .project-info {
+  .modal-eyebrow::before {
+    content: '';
+    width: 24px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .modal-title {
+    font-family: 'Anton', sans-serif;
+    font-size: clamp(32px, 4vw, 52px);
+    line-height: 1;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+  }
+
+  .modal-grid {
     display: grid;
     grid-template-columns: 1fr 2fr 1fr;
     gap: 40px;
-    padding-top: 20px;
+    padding-top: 8px;
+    border-top: 1px solid rgba(232, 226, 213, 0.1);
+    margin-top: 4px;
   }
 
-  .info-block .info-label {
+  .modal-block {
+    padding-top: 24px;
+  }
+
+  .modal-block .label {
     font-family: 'JetBrains Mono', monospace;
     font-size: 10px;
     letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--muted);
-    margin-bottom: 12px;
+    margin-bottom: 14px;
     display: block;
   }
 
-  .info-block .info-text {
-    font-size: 18px;
-    line-height: 1.45;
+  .modal-block p {
+    font-size: 17px;
+    line-height: 1.5;
+    color: var(--ink);
   }
 
-  .roles-list {
+  .modal-roles {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 7px;
   }
 
-  .roles-list .role {
+  .modal-roles span {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
-    letter-spacing: 0.05em;
+    font-size: 11px;
     color: var(--ink);
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 9px;
   }
 
-  .roles-list .role::before {
+  .modal-roles span::before {
     content: '';
     width: 5px;
     height: 5px;
@@ -425,135 +684,43 @@
     border-radius: 50%;
   }
 
-  .meta-list {
+  .modal-meta {
     display: flex;
     flex-direction: column;
     gap: 4px;
     font-family: 'JetBrains Mono', monospace;
     font-size: 11px;
-    letter-spacing: 0.05em;
-    text-align: right;
     color: var(--muted);
   }
 
-  .meta-list strong {
+  .modal-meta dt {
+    color: var(--muted);
+    margin-top: 8px;
+  }
+
+  .modal-meta dt:first-child { margin-top: 0; }
+
+  .modal-meta dd {
     color: var(--ink);
     font-weight: 500;
-  }
-
-  /* Color accents per project */
-  .project[data-accent="blue"] .project-num,
-  .project[data-accent="blue"] .video-tag { color: var(--accent-2); border-color: rgba(74, 139, 146, 0.4); }
-  .project[data-accent="blue"] .roles-list .role::before { background: var(--accent-2); }
-
-  .project[data-accent="yellow"] .project-num,
-  .project[data-accent="yellow"] .video-tag { color: var(--accent-3); border-color: rgba(184, 153, 104, 0.4); }
-  .project[data-accent="yellow"] .roles-list .role::before { background: var(--accent-3); }
-
-  /* ============ FILTERS ============ */
-  .filter-bar {
-    padding: 0 40px 40px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    align-items: center;
-    border-bottom: 1px solid rgba(232, 226, 213, 0.08);
-    margin-bottom: 40px;
-  }
-
-  .filter-label {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-right: 14px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .filter-label::before {
-    content: '';
-    width: 24px;
-    height: 1px;
-    background: var(--accent);
-  }
-
-  .filter-btn {
-    background: transparent;
-    border: 1px solid rgba(232, 226, 213, 0.2);
-    color: var(--ink);
-    padding: 9px 16px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: all 0.25s cubic-bezier(.2,.7,.2,1);
-    border-radius: 999px;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    white-space: nowrap;
-  }
-
-  .filter-btn:hover {
-    border-color: var(--accent);
-    color: var(--accent);
-  }
-
-  .filter-btn.active {
-    background: var(--accent);
-    border-color: var(--accent);
-    color: var(--bg-deep);
-  }
-
-  .filter-btn .count {
-    opacity: 0.6;
-    font-size: 9px;
-  }
-
-  .filter-btn.active .count { opacity: 0.8; }
-
-  /* Empty state */
-  .empty-state {
-    grid-column: 1 / -1;
-    padding: 80px 20px;
-    text-align: center;
-    font-family: 'Instrument Serif', serif;
-    font-size: 22px;
-    color: var(--muted);
-    display: none;
-  }
-
-  .empty-state.show { display: block; }
-
-  /* Project hiding animation */
-  .project {
-    transition: opacity 0.4s ease, transform 0.4s ease;
-  }
-
-  .project.hidden {
-    display: none;
+    margin-bottom: 2px;
   }
 
   /* ============ FOOTER ============ */
   footer {
     background: var(--bg-deep);
     color: var(--ink);
-    padding: 100px 40px 40px;
-    position: relative;
+    padding: 90px 40px 36px;
     border-top: 1px solid rgba(232, 226, 213, 0.08);
   }
 
   .footer-cta {
     font-family: 'Anton', sans-serif;
-    font-size: clamp(60px, 12vw, 180px);
-    line-height: 0.85;
+    font-size: clamp(48px, 9vw, 130px);
+    line-height: 0.88;
     letter-spacing: -0.04em;
     text-transform: uppercase;
-    margin-bottom: 60px;
+    margin-bottom: 50px;
   }
 
   .footer-cta em {
@@ -568,7 +735,7 @@
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 40px;
-    padding: 40px 0;
+    padding: 36px 0;
     border-top: 1px solid rgba(232, 226, 213, 0.1);
     border-bottom: 1px solid rgba(232, 226, 213, 0.1);
   }
@@ -579,14 +746,14 @@
     letter-spacing: 0.2em;
     text-transform: uppercase;
     color: rgba(232, 226, 213, 0.5);
-    margin-bottom: 14px;
+    margin-bottom: 12px;
     display: block;
   }
 
   .footer-contact a, .footer-contact span {
     color: var(--ink);
     text-decoration: none;
-    font-size: 18px;
+    font-size: 17px;
     line-height: 1.5;
     transition: color 0.2s;
     display: block;
@@ -597,7 +764,7 @@
   .footer-bottom {
     display: flex;
     justify-content: space-between;
-    padding-top: 30px;
+    padding-top: 24px;
     font-family: 'JetBrains Mono', monospace;
     font-size: 10px;
     letter-spacing: 0.15em;
@@ -605,43 +772,30 @@
     color: rgba(232, 226, 213, 0.5);
   }
 
-  /* entrance animations */
-  .reveal {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.9s cubic-bezier(.2,.7,.2,1), transform 0.9s cubic-bezier(.2,.7,.2,1);
-  }
-
-  .reveal.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
   /* Mobile */
   @media (max-width: 900px) {
-    nav { padding: 16px 20px; }
+    nav { padding: 14px 18px; }
     .nav-links { display: none; }
-    .hero { padding: 120px 20px 60px; }
-    .hero-bottom {
-      grid-template-columns: 1fr;
-      gap: 30px;
-    }
-    .hero-desc { grid-column: span 1; font-size: 18px; }
-    .hero-stats { text-align: left; }
-    .marquee-track { font-size: 16px; }
-    .section-header { padding: 60px 20px 20px; flex-direction: column; align-items: flex-start; gap: 12px; }
-    .filter-bar { padding: 0 20px 30px; gap: 8px; margin-bottom: 24px; }
-    .filter-label { width: 100%; margin-bottom: 6px; }
-    .filter-btn { padding: 8px 12px; font-size: 9px; }
-    .projects { padding: 20px 20px 60px; gap: 80px; }
-    .project-header { grid-template-columns: 1fr; gap: 10px; }
-    .project-year { text-align: left; }
-    .video-layout.both { grid-template-columns: 1fr; }
-    .project-info { grid-template-columns: 1fr; gap: 24px; }
-    .meta-list { text-align: left; }
-    footer { padding: 60px 20px 30px; }
-    .footer-contact { grid-template-columns: 1fr; gap: 24px; }
-    .footer-bottom { flex-direction: column; gap: 12px; }
+    .hero { padding: 90px 20px 20px; }
+    .hero-grid { grid-template-columns: 1fr; gap: 24px; }
+    .hero-meta { flex-wrap: wrap; gap: 18px; padding-bottom: 0; }
+    .featured { padding: 20px 20px 10px; }
+    .featured-wrap { aspect-ratio: 16 / 10; }
+    .featured-content { padding: 24px; }
+    .featured-title { max-width: 100%; }
+    .featured-desc { max-width: 100%; font-size: 14px; }
+    .row-header { padding: 0 20px; }
+    .row-track { padding: 8px 20px; gap: 10px; }
+    .card { height: 260px; }
+    .thumb-skeleton { width: 150px; }
+    .row-title { font-size: 18px; }
+    .modal { padding: 20px 12px; }
+    .modal-body { padding: 24px 20px 28px; }
+    .modal-grid { grid-template-columns: 1fr; gap: 24px; }
+    .modal-video-wrap.both { grid-template-columns: 1fr; }
+    footer { padding: 60px 20px 28px; }
+    .footer-contact { grid-template-columns: 1fr; gap: 20px; }
+    .footer-bottom { flex-direction: column; gap: 10px; }
   }
 </style>
 </head>
@@ -655,305 +809,95 @@
   </div>
   <div class="nav-links">
     <a href="#work">Trabalhos</a>
-    <a href="#about">Sobre</a>
     <a href="#contact">Contato</a>
   </div>
   <button class="logout-btn" onclick="sair()">Sair ↗</button>
 </nav>
 
-<!-- ====== HERO ====== -->
+<!-- ====== HERO COMPACTO ====== -->
 <section class="hero">
-  <div>
-    <div class="hero-eyebrow">Selected works · 2024—2026</div>
+  <div class="hero-eyebrow">Selected Works · 2024—2026</div>
+  <div class="hero-grid">
     <h1 class="hero-title">
-      Filmmaking<br>
-      <em>&amp;</em> direção<br>
-      de fotografia.
+      Filmmaking <em>&amp;</em> direção<br>de fotografia.
     </h1>
+    <div class="hero-meta">
+      <div class="hero-meta-item">
+        <span>Localização</span>
+        <strong>São Paulo · BR</strong>
+      </div>
+      <div class="hero-meta-item">
+        <span>Status</span>
+        <strong>Disponível</strong>
+      </div>
+      <div class="hero-meta-item">
+        <span>Projetos</span>
+        <strong id="totalCount">—</strong>
+      </div>
+    </div>
   </div>
+  <p class="hero-desc">
+    Captação, direção de fotografia e edição com olhar autoral. Cada projeto é construído do enquadramento ao corte final.
+  </p>
+</section>
 
-  <div class="hero-bottom">
-    <p class="hero-desc">
-      Captação, direção de fotografia e edição com olhar autoral. Cada projeto é construído do enquadramento ao corte final.
-    </p>
-    <div class="hero-stats">
-      <span>Baseado em</span>
-      <strong>São Paulo · BR</strong>
-      <span style="margin-top:10px">Disponível para</span>
-      <strong>Projetos globais</strong>
+<!-- ====== FEATURED (vídeo destaque tipo banner Netflix) ====== -->
+<section class="featured" id="work">
+  <div class="featured-wrap">
+    <img id="featuredImg" src="https://vumbnail.com/1195220819_large.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.55;filter:brightness(0.9);">
+    <div class="featured-content">
+      <div class="featured-tag">★ Showreel · 2024—2025</div>
+      <h2 class="featured-title">Selected<br>Works Reel</h2>
+      <p class="featured-desc">
+        Compilado cinematográfico reunindo trabalhos de captação, direção de fotografia, cobertura de eventos, filmes institucionais e edição audiovisual.
+      </p>
+      <button class="featured-play" onclick="openModal('reel')">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        Assistir reel
+      </button>
     </div>
   </div>
 </section>
 
-<!-- marquee -->
-<div class="marquee">
-  <div class="marquee-track">
-    <span>Cinematografia</span><span class="dot">●</span>
-    <span>Direção de fotografia</span><span class="dot">●</span>
-    <span>Captação</span><span class="dot">●</span>
-    <span>Edição</span><span class="dot">●</span>
-    <span>Color grading</span><span class="dot">●</span>
-    <span>Filmmaking</span><span class="dot">●</span>
-    <span>Cinematografia</span><span class="dot">●</span>
-    <span>Direção de fotografia</span><span class="dot">●</span>
-    <span>Captação</span><span class="dot">●</span>
-    <span>Edição</span><span class="dot">●</span>
-    <span>Color grading</span><span class="dot">●</span>
-    <span>Filmmaking</span><span class="dot">●</span>
+<!-- ====== ROWS (carrosséis por categoria) ====== -->
+<div class="rows" id="rows">
+  <!-- Os carrosséis são gerados via JS abaixo -->
+</div>
+
+<!-- ====== MODAL ====== -->
+<div class="modal" id="modal" onclick="if(event.target===this)closeModal()">
+  <div class="modal-content">
+    <button class="modal-close" onclick="closeModal()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+    </button>
+    <div id="modalVideo"></div>
+    <div class="modal-body">
+      <div class="modal-eyebrow" id="modalEyebrow"></div>
+      <h2 class="modal-title" id="modalTitle"></h2>
+      <div class="modal-grid">
+        <div class="modal-block">
+          <span class="label">Função</span>
+          <div class="modal-roles" id="modalRoles"></div>
+        </div>
+        <div class="modal-block">
+          <span class="label">Sobre o trabalho</span>
+          <p id="modalDesc"></p>
+        </div>
+        <div class="modal-block">
+          <span class="label">Detalhes</span>
+          <dl class="modal-meta" id="modalMeta"></dl>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
-<!-- ====== SECTION: WORK ====== -->
-<div class="section-header" id="work">
-  <div class="section-num">[01 / Work]</div>
-  <h2 class="section-title">Trabalhos <em>selecionados</em></h2>
-</div>
-
-<!-- ====== FILTROS ====== -->
-<div class="filter-bar" id="filterBar">
-  <span class="filter-label">Filtrar por</span>
-  <button class="filter-btn active" data-filter="all">Todos <span class="count"></span></button>
-  <button class="filter-btn" data-filter="marketing">Ações de Marketing <span class="count"></span></button>
-  <button class="filter-btn" data-filter="eventos">Cobertura de Eventos <span class="count"></span></button>
-  <button class="filter-btn" data-filter="sameday">Same Day Edit <span class="count"></span></button>
-  <button class="filter-btn" data-filter="mobile">Mobile <span class="count"></span></button>
-  <button class="filter-btn" data-filter="institucional">Institucional <span class="count"></span></button>
-  <button class="filter-btn" data-filter="videoclipes">Videoclipes <span class="count"></span></button>
-  <button class="filter-btn" data-filter="social">Mídias Sociais <span class="count"></span></button>
-</div>
-
-<section class="projects" id="projects">
-
-  <!-- ===================================== -->
-  <!-- PROJETO 01 — Ação Outubro Rosa / Betano -->
-  <!-- ===================================== -->
-  <article class="project reveal" data-accent="orange" data-categories="marketing,eventos,social,sameday">
-    <div class="project-header">
-      <div class="project-num">[01]</div>
-      <h3 class="project-title">Ação Outubro Rosa — Betano</h3>
-      <div class="project-year">2025 · Brasil</div>
-    </div>
-
-    <div class="video-layout horizontal">
-      <div class="video-wrap h">
-        <span class="video-tag">16:9 · Horizontal</span>
-        <iframe src="https://player.vimeo.com/video/1195173058?title=0&byline=0&portrait=0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
-      </div>
-    </div>
-
-    <div class="project-info">
-      <div class="info-block">
-        <span class="info-label">Função</span>
-        <div class="roles-list">
-          <span class="role">Coordenação geral</span>
-          <span class="role">Direção executiva</span>
-          <span class="role">Direção artística</span>
-        </div>
-      </div>
-
-      <div class="info-block">
-        <span class="info-label">Sobre o trabalho</span>
-        <p class="info-text">
-          Produção fotográfica e desenvolvimento de peça audiovisual de até 2 minutos para Instagram, criada para a campanha Outubro Rosa. Acompanhamento de todas as etapas do projeto, da pré-produção à pós-produção. Produção completa realizada pela Zero Gravidade Produtora Audiovisual.
-        </p>
-      </div>
-
-      <div class="info-block">
-        <span class="info-label">Detalhes</span>
-        <div class="meta-list">
-          <span>Cliente</span>
-          <strong>Zero Gravidade<br>Produtora Audiovisual</strong>
-          <span style="margin-top:8px">Cliente final</span>
-          <strong>Betano</strong>
-          <span style="margin-top:8px">Plataforma</span>
-          <strong>Instagram</strong>
-          <span style="margin-top:8px">Duração</span>
-          <strong>até 2 min</strong>
-        </div>
-      </div>
-    </div>
-  </article>
-
-  <!-- ===================================== -->
-  <!-- PROJETO 02 — Entrega do Troféu / Cainã Gartner / Betano -->
-  <!-- ===================================== -->
-  <article class="project reveal" data-accent="blue" data-categories="marketing,eventos,social,sameday">
-    <div class="project-header">
-      <div class="project-num">[02]</div>
-      <h3 class="project-title">Entrega do Troféu — Cainã Gartner × Betano</h3>
-      <div class="project-year">2025 · Brasil</div>
-    </div>
-
-    <div class="video-layout vertical">
-      <div class="video-wrap v">
-        <span class="video-tag">9:16 · Vertical</span>
-        <iframe src="https://player.vimeo.com/video/1195178133?title=0&byline=0&portrait=0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
-      </div>
-    </div>
-
-    <div class="project-info">
-      <div class="info-block">
-        <span class="info-label">Função</span>
-        <div class="roles-list">
-          <span class="role">Coordenação geral</span>
-          <span class="role">Direção executiva</span>
-          <span class="role">Direção artística</span>
-          <span class="role">Pós-produção</span>
-          <span class="role">Edição</span>
-        </div>
-      </div>
-
-      <div class="info-block">
-        <span class="info-label">Sobre o trabalho</span>
-        <p class="info-text">
-          Cobertura audiovisual da entrega do troféu de Melhor Jogador da Partida, produzido pelo artista Cainã Gartner. Acompanhamento de todas as etapas da produção. Produção completa realizada pela Zero Gravidade Produtora Audiovisual.
-        </p>
-      </div>
-
-      <div class="info-block">
-        <span class="info-label">Detalhes</span>
-        <div class="meta-list">
-          <span>Cliente</span>
-          <strong>Zero Gravidade<br>Produtora Audiovisual</strong>
-          <span style="margin-top:8px">Cliente final</span>
-          <strong>Betano</strong>
-          <span style="margin-top:8px">Artista</span>
-          <strong>Cainã Gartner</strong>
-          <span style="margin-top:8px">Formato</span>
-          <strong>Vertical 9:16</strong>
-        </div>
-      </div>
-    </div>
-  </article>
-
-  <!-- ===================================== -->
-  <!-- PROJETO 03 — Bar do Galo / Atlético vs Vasco / Betano -->
-  <!-- ===================================== -->
-  <article class="project reveal" data-accent="yellow" data-categories="marketing,eventos,social,sameday">
-    <div class="project-header">
-      <div class="project-num">[03]</div>
-      <h3 class="project-title">Bar do Galo — Atlético vs Vasco × Betano</h3>
-      <div class="project-year">2025 · Brasil</div>
-    </div>
-
-    <div class="video-layout vertical">
-      <div class="video-wrap v">
-        <span class="video-tag">9:16 · Vertical</span>
-        <iframe src="https://player.vimeo.com/video/1195176620?title=0&byline=0&portrait=0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
-      </div>
-    </div>
-
-    <div class="project-info">
-      <div class="info-block">
-        <span class="info-label">Função</span>
-        <div class="roles-list">
-          <span class="role">Coordenação geral</span>
-          <span class="role">Direção executiva</span>
-          <span class="role">Direção artística</span>
-          <span class="role">Pós-produção</span>
-          <span class="role">Edição</span>
-        </div>
-      </div>
-
-      <div class="info-block">
-        <span class="info-label">Sobre o trabalho</span>
-        <p class="info-text">
-          Cobertura audiovisual da ação realizada no Bar do Galo durante a partida entre Atlético Mineiro vs Vasco. Produção completa realizada pela Zero Gravidade Produtora Audiovisual.
-        </p>
-      </div>
-
-      <div class="info-block">
-        <span class="info-label">Detalhes</span>
-        <div class="meta-list">
-          <span>Cliente</span>
-          <strong>Zero Gravidade<br>Produtora Audiovisual</strong>
-          <span style="margin-top:8px">Cliente final</span>
-          <strong>Betano</strong>
-          <span style="margin-top:8px">Evento</span>
-          <strong>Atlético-MG × Vasco</strong>
-          <span style="margin-top:8px">Formato</span>
-          <strong>Vertical 9:16</strong>
-        </div>
-      </div>
-    </div>
-  </article>
-
-  <!-- ===================================== -->
-  <!-- PROJETO 04 — Advantage VIP Lounge / Filme Fim de Ano -->
-  <!-- ===================================== -->
-  <article class="project reveal" data-accent="orange" data-categories="institucional,marketing,social">
-    <div class="project-header">
-      <div class="project-num">[04]</div>
-      <h3 class="project-title">Advantage VIP Lounge — Filme de Fim de Ano</h3>
-      <div class="project-year">2025 · Brasil</div>
-    </div>
-
-    <div class="video-layout horizontal">
-      <div class="video-wrap h">
-        <span class="video-tag">16:9 · Horizontal</span>
-        <iframe src="https://player.vimeo.com/video/1195180111?title=0&byline=0&portrait=0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
-      </div>
-    </div>
-
-    <div class="project-info">
-      <div class="info-block">
-        <span class="info-label">Função</span>
-        <div class="roles-list">
-          <span class="role">Direção criativa</span>
-          <span class="role">Solução em IA</span>
-          <span class="role">Roteirização</span>
-          <span class="role">Direção artística</span>
-          <span class="role">Pós-produção</span>
-          <span class="role">Edição</span>
-        </div>
-      </div>
-
-      <div class="info-block">
-        <span class="info-label">Sobre o trabalho</span>
-        <p class="info-text">
-          Filme institucional de fim de ano com workflow audiovisual baseado em inteligência artificial de alta resolução. A campanha exigia captação em múltiplas unidades do lounge pelo Brasil — operação logística complexa e de alto custo. Solução desenvolvida: a partir de fotografias fornecidas pelo cliente, as unidades foram recriadas cinematograficamente via IA, com geração de cenas, cenários virtuais, narrativa visual e locução.
-        </p>
-      </div>
-
-      <div class="info-block">
-        <span class="info-label">Detalhes</span>
-        <div class="meta-list">
-          <span>Cliente</span>
-          <strong>Guilherme Pires</strong>
-          <span style="margin-top:8px">Cliente final</span>
-          <strong>Advantage VIP Lounge</strong>
-          <span style="margin-top:8px">Workflow</span>
-          <strong>IA generativa<br>+ pós-produção</strong>
-          <span style="margin-top:8px">Formato</span>
-          <strong>Horizontal 16:9</strong>
-        </div>
-      </div>
-    </div>
-  </article>
-
-  <!-- ===================================== -->
-  <!-- Empty state (aparece quando filtro não retorna nada) -->
-  <!-- ===================================== -->
-  <div class="empty-state" id="emptyState">
-    Nenhum projeto encontrado nesta categoria.
-  </div>
-
-  <!-- ===================================== -->
-  <!-- Para adicionar mais projetos, copie um <article class="project ..."> inteiro
-       e cole abaixo. Categorias disponíveis em data-categories:
-       marketing · eventos · sameday · mobile · institucional · videoclipes · social
-       (pode combinar várias separadas por vírgula) -->
-  <!-- ===================================== -->
-
-</section>
-
-<!-- ====== FOOTER / CONTACT ====== -->
+<!-- ====== FOOTER ====== -->
 <footer id="contact">
   <h2 class="footer-cta">
     Vamos<br>
     <em>filmar</em> juntos?
   </h2>
-
   <div class="footer-contact">
     <div>
       <span class="col-label">E-mail</span>
@@ -971,7 +915,6 @@
       <span>Disponível para viagens</span>
     </div>
   </div>
-
   <div class="footer-bottom">
     <span>© 2025—2026 G. Studios</span>
     <span>Crafted with care</span>
@@ -979,7 +922,7 @@
 </footer>
 
 <script>
-  // verifica acesso
+  // ============ VERIFICAR ACESSO ============
   if (sessionStorage.getItem('gst_access') !== 'ok') {
     window.location.href = 'index.html';
   }
@@ -989,53 +932,346 @@
     window.location.href = 'index.html';
   }
 
-  // ============ FILTROS ============
-  const projects = document.querySelectorAll('.project');
-  const filterBtns = document.querySelectorAll('.filter-btn');
-  const emptyState = document.getElementById('emptyState');
+  // ============================================
+  // SHOWREEL — vídeo do banner featured (não aparece nos carrosséis)
+  // ============================================
+  const REEL = {
+    id: 'reel',
+    title: 'Selected Works Reel',
+    year: '2024—2025',
+    client: 'Showreel · G. Studios',
+    format: 'h',
+    videos: { h: '1195220819' },
+    roles: ['Captação de imagens','Direção de fotografia','Edição','Pós-produção','Narrativa visual'],
+    desc: 'Compilado cinematográfico reunindo diferentes trabalhos de captação, direção de fotografia, cobertura de eventos, filmes institucionais e edição audiovisual. Seleção de projetos desenvolvidos para marcas, eventos, produções corporativas e conteúdos publicitários.',
+    meta: {
+      'Período': '2024—2025',
+      'Tipo': 'Showreel / Compilado',
+      'Escopo': 'Marcas, eventos,\ncorporativos, publicitário'
+    }
+  };
 
-  // Conta projetos por categoria e atualiza os badges
-  function updateCounts() {
-    filterBtns.forEach(btn => {
-      const filter = btn.dataset.filter;
-      const countEl = btn.querySelector('.count');
-      let count = 0;
-      if (filter === 'all') {
-        count = projects.length;
-      } else {
-        projects.forEach(p => {
-          const cats = (p.dataset.categories || '').split(',').map(c => c.trim());
-          if (cats.includes(filter)) count++;
-        });
+  // ============================================
+  // BANCO DE PROJETOS
+  // ============================================
+  // Para adicionar novo projeto, copie um objeto e cole.
+  // Categorias: marketing, eventos, sameday, mobile, institucional, videoclipes, social
+  // Formato: 'h' (horizontal), 'v' (vertical), 'both' (ambos)
+  // ============================================
+  const PROJECTS = [
+    {
+      id: 'p01',
+      title: 'Ação Outubro Rosa — Betano',
+      year: '2025',
+      client: 'Zero Gravidade Produtora Audiovisual',
+      categories: ['marketing','eventos','social','sameday'],
+      format: 'v',
+      videos: { v: '1195173058' },
+      roles: ['Coordenação geral','Direção executiva','Direção artística'],
+      desc: 'Produção fotográfica e desenvolvimento de peça audiovisual de até 2 minutos para Instagram, criada para a campanha Outubro Rosa. Acompanhamento de todas as etapas do projeto, da pré-produção à pós-produção. Produção completa realizada pela Zero Gravidade Produtora Audiovisual.',
+      meta: {
+        'Cliente': 'Zero Gravidade',
+        'Cliente final': 'Betano',
+        'Plataforma': 'Instagram',
+        'Duração': 'até 2 min'
       }
-      if (countEl) countEl.textContent = `(${count})`;
-    });
-  }
-  updateCounts();
-
-  // Aplica filtro
-  function applyFilter(filter) {
-    let visible = 0;
-    projects.forEach(p => {
-      const cats = (p.dataset.categories || '').split(',').map(c => c.trim());
-      const show = filter === 'all' || cats.includes(filter);
-      if (show) {
-        p.classList.remove('hidden');
-        visible++;
-      } else {
-        p.classList.add('hidden');
+    },
+    {
+      id: 'p02',
+      title: 'Entrega do Troféu — Cainã Gartner × Betano',
+      year: '2025',
+      client: 'Zero Gravidade Produtora Audiovisual',
+      categories: ['marketing','eventos','social','sameday'],
+      format: 'v',
+      videos: { v: '1195176620' },
+      roles: ['Coordenação geral','Direção executiva','Direção artística','Pós-produção','Edição'],
+      desc: 'Cobertura audiovisual da entrega do troféu de Melhor Jogador da Partida, produzido pelo artista Cainã Gartner. Acompanhamento de todas as etapas da produção. Produção completa realizada pela Zero Gravidade Produtora Audiovisual.',
+      meta: {
+        'Cliente': 'Zero Gravidade',
+        'Cliente final': 'Betano',
+        'Artista': 'Cainã Gartner',
+        'Formato': 'Vertical 9:16'
       }
-    });
-    emptyState.classList.toggle('show', visible === 0);
+    },
+    {
+      id: 'p03',
+      title: 'Bar do Galo — Atlético vs Vasco × Betano',
+      year: '2025',
+      client: 'Zero Gravidade Produtora Audiovisual',
+      categories: ['marketing','eventos','social','sameday'],
+      format: 'v',
+      videos: { v: '1195178133' },
+      roles: ['Coordenação geral','Direção executiva','Direção artística','Pós-produção','Edição'],
+      desc: 'Cobertura audiovisual da ação realizada no Bar do Galo durante a partida entre Atlético Mineiro vs Vasco. Produção completa realizada pela Zero Gravidade Produtora Audiovisual.',
+      meta: {
+        'Cliente': 'Zero Gravidade',
+        'Cliente final': 'Betano',
+        'Evento': 'Atlético-MG × Vasco',
+        'Formato': 'Vertical 9:16'
+      }
+    },
+    {
+      id: 'p04',
+      title: 'Advantage VIP Lounge — Filme de Fim de Ano',
+      year: '2025',
+      client: 'Guilherme Pires',
+      categories: ['institucional','marketing','social'],
+      format: 'v',
+      videos: { v: '1195180111' },
+      roles: ['Direção criativa','Solução em IA','Roteirização','Direção artística','Pós-produção','Edição'],
+      desc: 'Filme institucional de fim de ano com workflow audiovisual baseado em inteligência artificial de alta resolução. A campanha exigia captação em múltiplas unidades do lounge pelo Brasil — operação logística complexa e de alto custo. Solução desenvolvida: a partir de fotografias fornecidas pelo cliente, as unidades foram recriadas cinematograficamente via IA, com geração de cenas, cenários virtuais, narrativa visual e locução.',
+      meta: {
+        'Cliente': 'Guilherme Pires',
+        'Cliente final': 'Advantage VIP Lounge',
+        'Workflow': 'IA generativa + pós',
+        'Formato': 'Vertical 9:16'
+      }
+    },
+    {
+      id: 'p05',
+      title: 'Rafa Ferreira × Gree do Brasil',
+      year: '2025',
+      client: 'Zero Gravidade Produtora Audiovisual',
+      categories: ['marketing','social'],
+      format: 'v',
+      videos: { v: '1195208035' },
+      roles: ['Pré-produção','Produção','Direção de fotografia','Fotografia','Pós-produção','Edição'],
+      desc: 'Produção audiovisual para anúncio da parceria entre a piloto Rafa Ferreira e a Gree do Brasil. Produção audiovisual realizada pela Zero Gravidade Produtora Audiovisual.',
+      meta: {
+        'Cliente': 'Zero Gravidade',
+        'Cliente final': 'Gree do Brasil',
+        'Piloto': 'Rafa Ferreira',
+        'Formato': 'Vertical 9:16'
+      }
+    },
+    {
+      id: 'p06',
+      title: 'Porsche Cayman S — Automotive Film',
+      year: '2025',
+      client: 'Carframe Mídia',
+      categories: ['social'],
+      format: 'v',
+      videos: { v: '1195214124' },
+      roles: ['Captação cinematográfica','Edição de imagens'],
+      desc: 'Produção audiovisual de Porsche Cayman S para colecionador particular de veículos. Produção audiovisual realizada para Carframe Mídia.',
+      meta: {
+        'Cliente': 'Carframe Mídia',
+        'Veículo': 'Porsche Cayman S',
+        'Tipo': 'Colecionador particular',
+        'Formato': 'Vertical 9:16'
+      }
+    },
+    {
+      id: 'p07',
+      title: 'Credit AI — Event Coverage',
+      year: '2025',
+      client: 'Sense / Zero Gravidade Produtora Audiovisual',
+      categories: ['eventos','sameday','social'],
+      format: 'v',
+      videos: { v: '1195217597' },
+      roles: ['Cobertura completa do evento','Captação audiovisual','Same Day Edit'],
+      desc: 'Cobertura audiovisual de evento corporativo Credit AI com produção de conteúdo dinâmico para redes sociais e comunicação institucional. Cobertura completa do evento corporativo com captação audiovisual e entrega de same day edit.',
+      meta: {
+        'Cliente': 'Sense / Zero Gravidade',
+        'Cliente final': 'Wekoos AI, Morada AI',
+        'Evento': 'Credit AI',
+        'Formato': 'Vertical 9:16'
+      }
+    }
+  ];
+
+  // ============ CATEGORIAS ============
+  const CATEGORIES = [
+    { slug: 'marketing',    label: 'Ações de Marketing' },
+    { slug: 'eventos',      label: 'Cobertura de Eventos' },
+    { slug: 'sameday',      label: 'Same Day Edit' },
+    { slug: 'mobile',       label: 'Mobile' },
+    { slug: 'institucional',label: 'Institucional' },
+    { slug: 'videoclipes',  label: 'Videoclipes' },
+    { slug: 'social',       label: 'Mídias Sociais' }
+  ];
+
+  // ============ HELPERS ============
+  function getById(id) {
+    if (id === 'reel') return REEL;
+    return PROJECTS.find(p => p.id === id);
   }
 
-  // Click nos botões
-  filterBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      filterBtns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      applyFilter(btn.dataset.filter);
+  // Thumbnail Vimeo (poster + autoplay muted como preview)
+  function vimeoEmbed(id, opts = {}) {
+    const params = new URLSearchParams({
+      title: 0, byline: 0, portrait: 0,
+      ...(opts.background ? { background: 1, muted: 1, autoplay: 1, loop: 1 } : {})
     });
+    return `https://player.vimeo.com/video/${id}?${params.toString()}`;
+  }
+
+  // ============ RENDER ROWS ============
+  function renderRows() {
+    const rowsEl = document.getElementById('rows');
+    rowsEl.innerHTML = '';
+
+    CATEGORIES.forEach(cat => {
+      const list = PROJECTS.filter(p => p.categories.includes(cat.slug));
+      if (list.length === 0) return; // não mostra categoria vazia
+
+      const row = document.createElement('section');
+      row.className = 'row';
+      row.dataset.category = cat.slug;
+
+      const trackId = `track-${cat.slug}`;
+      row.innerHTML = `
+        <div class="row-header">
+          <h3 class="row-title">${cat.label} <span class="count">${String(list.length).padStart(2,'0')}</span></h3>
+          <div class="row-nav">
+            <button onclick="scrollRow('${trackId}', -1)" aria-label="Anterior">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            </button>
+            <button onclick="scrollRow('${trackId}', 1)" aria-label="Próximo">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
+          </div>
+        </div>
+        <div class="row-track" id="${trackId}">
+          ${list.map(p => cardHTML(p)).join('')}
+        </div>
+      `;
+      rowsEl.appendChild(row);
+    });
+
+    // animation on scroll
+    document.querySelectorAll('.row').forEach(r => obs.observe(r));
+  }
+
+  function cardHTML(p) {
+    const isVertical = p.format === 'v';
+    const vid = p.videos.h || p.videos.v;
+    const formatLabel = p.format === 'h' ? '16:9 · Horizontal'
+                      : p.format === 'v' ? '9:16 · Vertical'
+                      : '16:9 + 9:16';
+    return `
+      <div class="card ${isVertical ? 'v' : ''}" onclick="openModal('${p.id}')">
+        <div class="card-thumb" data-vid="${vid}">
+          <div class="thumb-skeleton"></div>
+        </div>
+        <div class="card-play">
+          <div class="card-play-icon">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+        </div>
+        <div class="card-info">
+          <span class="card-format">${formatLabel}</span>
+          <div class="card-title">${p.title}</div>
+          <div class="card-client">${p.year} · ${p.client}</div>
+        </div>
+      </div>
+    `;
+  }
+
+  // ============ THUMBNAILS via Vimeo oEmbed (proporção nativa) ============
+  // O Vimeo oEmbed retorna a capa na proporção real do vídeo
+  // (9:16 para verticais, 16:9 para horizontais). vumbnail.com sempre dá 16:9.
+  async function fetchVimeoThumb(id) {
+    const cacheKey = `vthumb_${id}`;
+    const cached = sessionStorage.getItem(cacheKey);
+    if (cached) return cached;
+    try {
+      const res = await fetch(`https://vimeo.com/api/oembed.json?url=https%3A//vimeo.com/${id}&width=1280`);
+      if (!res.ok) throw new Error('http ' + res.status);
+      const data = await res.json();
+      let url = data.thumbnail_url || '';
+      // pega versão em maior resolução
+      url = url.replace(/_\d+x\d+/, '_1280');
+      if (url) sessionStorage.setItem(cacheKey, url);
+      return url;
+    } catch (e) {
+      // fallback: vumbnail.com (sempre funciona, mas 16:9)
+      return `https://vumbnail.com/${id}_large.jpg`;
+    }
+  }
+
+  async function hydrateThumbs() {
+    const thumbs = document.querySelectorAll('.card-thumb[data-vid]');
+    // carrega em paralelo com Promise.all
+    await Promise.all(Array.from(thumbs).map(async (el) => {
+      const id = el.dataset.vid;
+      const url = await fetchVimeoThumb(id);
+      if (!url) return;
+      const img = new Image();
+      img.alt = '';
+      img.loading = 'lazy';
+      img.onload = () => {
+        const skel = el.querySelector('.thumb-skeleton');
+        if (skel) skel.remove();
+        el.appendChild(img);
+      };
+      img.onerror = () => {
+        // fallback final
+        img.src = `https://vumbnail.com/${id}_large.jpg`;
+      };
+      img.src = url;
+    }));
+  }
+
+  async function hydrateFeatured() {
+    const url = await fetchVimeoThumb(REEL.videos.h);
+    if (url) {
+      const el = document.getElementById('featuredImg');
+      if (el) el.src = url;
+    }
+  }
+
+  // scroll horizontal das rows
+  function scrollRow(trackId, dir) {
+    const track = document.getElementById(trackId);
+    const card = track.querySelector('.card');
+    if (!card) return;
+    const step = card.offsetWidth + 14; // largura + gap
+    track.scrollBy({ left: step * 2 * dir, behavior: 'smooth' });
+  }
+
+  // ============ MODAL ============
+  function openModal(id) {
+    const p = getById(id);
+    if (!p) return;
+    const modal = document.getElementById('modal');
+    const videoEl = document.getElementById('modalVideo');
+
+    // monta video (autoplay quando abre o modal)
+    let videoHTML = '';
+    if (p.format === 'both') {
+      videoHTML = `
+        <div class="modal-video-wrap both">
+          <div class="mv-h"><iframe src="${vimeoEmbed(p.videos.h)}&autoplay=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div>
+          <div class="mv-v"><iframe src="${vimeoEmbed(p.videos.v)}" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div>
+        </div>`;
+    } else {
+      const vid = p.videos.h || p.videos.v;
+      videoHTML = `<div class="modal-video-wrap ${p.format}"><iframe src="${vimeoEmbed(vid)}&autoplay=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div>`;
+    }
+    videoEl.innerHTML = videoHTML;
+
+    document.getElementById('modalEyebrow').textContent = `${p.year} · ${p.client}`;
+    document.getElementById('modalTitle').textContent = p.title;
+    document.getElementById('modalRoles').innerHTML = p.roles.map(r => `<span>${r}</span>`).join('');
+    document.getElementById('modalDesc').textContent = p.desc;
+    document.getElementById('modalMeta').innerHTML =
+      Object.entries(p.meta).map(([k,v]) => `<dt>${k}</dt><dd>${v}</dd>`).join('');
+
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    const modal = document.getElementById('modal');
+    modal.classList.remove('open');
+    document.getElementById('modalVideo').innerHTML = ''; // para os vídeos
+    document.body.style.overflow = '';
+  }
+
+  // ESC fecha modal
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeModal();
   });
 
   // ============ REVEAL ON SCROLL ============
@@ -1048,7 +1284,11 @@
     });
   }, { threshold: 0.1 });
 
-  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+  // ============ INIT ============
+  document.getElementById('totalCount').textContent = String(PROJECTS.length).padStart(2,'0');
+  renderRows();
+  hydrateThumbs();
+  hydrateFeatured();
 </script>
 
 </body>
