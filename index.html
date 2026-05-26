@@ -8,6 +8,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<!-- Instagram embed script (oficial) -->
+<script async src="https://www.instagram.com/embed.js"></script>
 <style>
   :root {
     --bg: #0F2A30;
@@ -816,6 +818,90 @@
     margin-bottom: 2px;
   }
 
+  /* ============ INSTAGRAM EMBED ============ */
+  .modal-instagram {
+    margin-top: 36px;
+    padding-top: 30px;
+    border-top: 1px solid rgba(232, 226, 213, 0.1);
+  }
+
+  .modal-instagram .ig-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .modal-instagram .ig-label::before {
+    content: '';
+    width: 24px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .modal-instagram .ig-wrap {
+    display: flex;
+    justify-content: center;
+    background: rgba(8, 26, 30, 0.4);
+    padding: 24px;
+    border-radius: 6px;
+    border: 1px solid rgba(232, 226, 213, 0.05);
+  }
+
+  /* limita largura do card do Instagram pra não ficar gigante */
+  .modal-instagram blockquote.instagram-media {
+    max-width: 540px !important;
+    min-width: 280px !important;
+    width: 100% !important;
+    margin: 0 auto !important;
+  }
+
+  /* Instagram como CONTEÚDO PRINCIPAL (sem Vimeo) */
+  .modal-instagram-main {
+    display: flex;
+    justify-content: center;
+    padding: 24px;
+    background: linear-gradient(135deg, #143840 0%, #081A1E 100%);
+  }
+
+  .modal-instagram-main blockquote.instagram-media {
+    max-width: 540px !important;
+    min-width: 280px !important;
+    width: 100% !important;
+    margin: 0 auto !important;
+  }
+
+  /* Placeholder na thumbnail (quando não tem nem Vimeo nem imagem custom) */
+  .thumb-placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #143840 0%, #081A1E 100%);
+    color: var(--accent);
+    opacity: 0.5;
+  }
+
+  /* Badge "via Instagram" no card */
+  .card-source-ig {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent-2);
+    margin-left: 6px;
+    padding: 3px 7px;
+    border: 1px solid rgba(74, 139, 146, 0.4);
+    border-radius: 2px;
+    display: inline-block;
+  }
+
   /* ============ FOOTER ============ */
   footer {
     background: var(--bg-deep);
@@ -1008,6 +1094,8 @@
           <dl class="modal-meta" id="modalMeta"></dl>
         </div>
       </div>
+      <!-- Container do embed do Instagram (preenchido via JS quando o projeto tiver link) -->
+      <div class="modal-instagram" id="modalInstagram" style="display:none"></div>
     </div>
   </div>
 </div>
@@ -1221,6 +1309,28 @@
         'Setor': 'Industrial',
         'Formato': 'Horizontal 16:9'
       }
+    },
+    {
+      id: 'p10',
+      title: 'NBA House — Highlights',
+      year: '2025',
+      client: 'Studio 3K Filmes',
+      categories: ['eventos','social'],
+      format: 'v',
+      instagram: 'https://www.instagram.com/p/DKhcal2Msij/',
+      thumbnail: 'assets/thumbs/nba-house.jpg',
+      roles: ['Director of Photography (DOP 1)'],
+      desc: 'Captação cinematográfica dos highlights da NBA House Brasil, evento oficial da NBA no Brasil. Trabalho de DOP 1 ao lado da equipe da Studio 3K Filmes, com direção do próprio estúdio e edição/VFX por Paulinho.',
+      meta: {
+        'Cliente direto': 'Studio 3K Filmes',
+        'Cliente indireto': 'TM1',
+        'Cliente final': 'NBA Brasil',
+        'Direção': 'Studio 3K Filmes',
+        'DOP 2': 'Philippe Norman',
+        'Edit/VFX': 'Paulinho',
+        'Produção': 'Ana Paula Fantecele',
+        'Formato': 'Vertical 9:16'
+      }
     }
   ];
 
@@ -1351,20 +1461,33 @@
 
   function cardHTML(p) {
     const isVertical = p.format === 'v';
-    const vid = p.videos.h || p.videos.v;
     const formatLabel = p.format === 'h' ? '16:9 · Horizontal'
                       : p.format === 'v' ? '9:16 · Vertical'
                       : '16:9 + 9:16';
     const cardClass = isVertical ? 'v' : 'h';
+
+    // Determina a fonte da thumbnail
+    // 1) Se tem Vimeo, usa vumbnail.com
+    // 2) Se for Instagram-only, usa imagem custom (campo `thumbnail`) ou um placeholder
+    let thumbSrc = '';
+    if (p.videos && (p.videos.h || p.videos.v)) {
+      const vid = p.videos.h || p.videos.v;
+      thumbSrc = `https://vumbnail.com/${vid}_large.jpg`;
+    } else if (p.thumbnail) {
+      thumbSrc = p.thumbnail;
+    }
+
+    // Badge "Instagram" para projetos cuja fonte é Instagram
+    const igBadge = (!p.videos && p.instagram)
+      ? '<span class="card-source-ig">via Instagram</span>'
+      : '';
+
     return `
       <div class="card ${cardClass}" onclick="openModal('${p.id}')">
         <div class="card-thumb">
           <div class="thumb-skeleton"></div>
-          <img src="https://vumbnail.com/${vid}_large.jpg"
-               alt="${p.title}"
-               loading="lazy"
-               class="thumb-img"
-               style="opacity:0">
+          ${thumbSrc ? `<img src="${thumbSrc}" alt="${p.title}" loading="lazy" class="thumb-img" style="opacity:0">` : ''}
+          ${!thumbSrc ? '<div class="thumb-placeholder"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg></div>' : ''}
         </div>
         <div class="card-play">
           <div class="card-play-icon">
@@ -1373,6 +1496,7 @@
         </div>
         <div class="card-info">
           <span class="card-format">${formatLabel}</span>
+          ${igBadge}
           <div class="card-title">${p.title}</div>
           <div class="card-client">${p.year} · ${p.client}</div>
         </div>
@@ -1419,17 +1543,30 @@
     const modal = document.getElementById('modal');
     const videoEl = document.getElementById('modalVideo');
 
-    // monta video (autoplay quando abre o modal)
+    // monta video — pode ser Vimeo OU Instagram como fonte principal
     let videoHTML = '';
-    if (p.format === 'both') {
+    if (p.videos && (p.videos.h || p.videos.v)) {
+      // Vimeo (padrão)
+      if (p.format === 'both') {
+        videoHTML = `
+          <div class="modal-video-wrap both">
+            <div class="mv-h"><iframe src="${vimeoEmbed(p.videos.h)}&autoplay=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div>
+            <div class="mv-v"><iframe src="${vimeoEmbed(p.videos.v)}" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div>
+          </div>`;
+      } else {
+        const vid = p.videos.h || p.videos.v;
+        videoHTML = `<div class="modal-video-wrap ${p.format}"><iframe src="${vimeoEmbed(vid)}&autoplay=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div>`;
+      }
+    } else if (p.instagram) {
+      // Instagram como fonte principal (sem Vimeo disponível)
       videoHTML = `
-        <div class="modal-video-wrap both">
-          <div class="mv-h"><iframe src="${vimeoEmbed(p.videos.h)}&autoplay=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div>
-          <div class="mv-v"><iframe src="${vimeoEmbed(p.videos.v)}" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div>
+        <div class="modal-instagram-main">
+          <blockquote class="instagram-media"
+                      data-instgrm-captioned
+                      data-instgrm-permalink="${p.instagram}"
+                      data-instgrm-version="14">
+          </blockquote>
         </div>`;
-    } else {
-      const vid = p.videos.h || p.videos.v;
-      videoHTML = `<div class="modal-video-wrap ${p.format}"><iframe src="${vimeoEmbed(vid)}&autoplay=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div>`;
     }
     videoEl.innerHTML = videoHTML;
 
@@ -1440,6 +1577,32 @@
     document.getElementById('modalMeta').innerHTML =
       Object.entries(p.meta).map(([k,v]) => `<dt>${k}</dt><dd>${v}</dd>`).join('');
 
+    // Instagram embed adicional (só mostra se há Vimeo + Instagram juntos)
+    const igContainer = document.getElementById('modalInstagram');
+    if (p.instagram && p.videos && (p.videos.h || p.videos.v)) {
+      igContainer.innerHTML = `
+        <div class="ig-label">Veja no Instagram</div>
+        <div class="ig-wrap">
+          <blockquote class="instagram-media"
+                      data-instgrm-captioned
+                      data-instgrm-permalink="${p.instagram}"
+                      data-instgrm-version="14">
+          </blockquote>
+        </div>
+      `;
+      igContainer.style.display = 'block';
+    } else {
+      igContainer.style.display = 'none';
+      igContainer.innerHTML = '';
+    }
+
+    // Processa Instagram embeds (necessário sempre que inserir dinamicamente)
+    setTimeout(() => {
+      if (window.instgrm && window.instgrm.Embeds) {
+        window.instgrm.Embeds.process();
+      }
+    }, 100);
+
     modal.classList.add('open');
     document.body.style.overflow = 'hidden';
   }
@@ -1448,6 +1611,8 @@
     const modal = document.getElementById('modal');
     modal.classList.remove('open');
     document.getElementById('modalVideo').innerHTML = ''; // para os vídeos
+    const ig = document.getElementById('modalInstagram');
+    if (ig) { ig.innerHTML = ''; ig.style.display = 'none'; }
     document.body.style.overflow = '';
   }
 
