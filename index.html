@@ -1043,7 +1043,7 @@
 <!-- ====== FEATURED (vídeo destaque tipo banner Netflix) ====== -->
 <section class="featured" id="work">
   <div class="featured-wrap">
-    <img id="featuredImg" src="https://vumbnail.com/1195220819_large.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.55;filter:brightness(0.9);">
+    <img id="featuredImg" src="assets/thumbs/demoreel.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.55;filter:brightness(0.9);">
     <div class="featured-content">
       <div class="featured-tag">★ Showreel · 2024—2025</div>
       <h2 class="featured-title">Selected<br>Works Reel</h2>
@@ -1164,6 +1164,7 @@
       categories: ['marketing','eventos','social','sameday'],
       format: 'v',
       videos: { v: '1195173058' },
+      thumbnail: 'assets/thumbs/outubro-rosa.jpg',
       roles: ['Coordenação geral','Direção executiva','Direção artística'],
       desc: 'Produção fotográfica e desenvolvimento de peça audiovisual de até 2 minutos para Instagram, criada para a campanha Outubro Rosa. Acompanhamento de todas as etapas do projeto, da pré-produção à pós-produção. Produção completa realizada pela Zero Gravidade Produtora Audiovisual.',
       meta: {
@@ -1181,6 +1182,7 @@
       categories: ['marketing','eventos','social','sameday'],
       format: 'v',
       videos: { v: '1195176620' },
+      thumbnail: 'assets/thumbs/caina-gartner.jpg',
       roles: ['Coordenação geral','Direção executiva','Direção artística','Pós-produção','Edição'],
       desc: 'Cobertura audiovisual da entrega do troféu de Melhor Jogador da Partida, produzido pelo artista Cainã Gartner. Acompanhamento de todas as etapas da produção. Produção completa realizada pela Zero Gravidade Produtora Audiovisual.',
       meta: {
@@ -1198,6 +1200,7 @@
       categories: ['marketing','eventos','social','sameday'],
       format: 'v',
       videos: { v: '1195178133' },
+      thumbnail: 'assets/thumbs/bar-do-galo.jpg',
       roles: ['Coordenação geral','Direção executiva','Direção artística','Pós-produção','Edição'],
       desc: 'Cobertura audiovisual da ação realizada no Bar do Galo durante a partida entre Atlético Mineiro vs Vasco. Produção completa realizada pela Zero Gravidade Produtora Audiovisual.',
       meta: {
@@ -1215,6 +1218,7 @@
       categories: ['institucional','marketing','social'],
       format: 'v',
       videos: { v: '1195180111' },
+      thumbnail: 'assets/thumbs/advantage-vip.jpg',
       roles: ['Direção criativa','Solução em IA','Roteirização','Direção artística','Pós-produção','Edição'],
       desc: 'Filme institucional de fim de ano com workflow audiovisual baseado em inteligência artificial de alta resolução. A campanha exigia captação em múltiplas unidades do lounge pelo Brasil — operação logística complexa e de alto custo. Solução desenvolvida: a partir de fotografias fornecidas pelo cliente, as unidades foram recriadas cinematograficamente via IA, com geração de cenas, cenários virtuais, narrativa visual e locução.',
       meta: {
@@ -1232,6 +1236,7 @@
       categories: ['marketing','social'],
       format: 'v',
       videos: { v: '1195208035' },
+      thumbnail: 'assets/thumbs/rafa-gree.jpg',
       roles: ['Pré-produção','Produção','Direção de fotografia','Fotografia','Pós-produção','Edição'],
       desc: 'Produção audiovisual para anúncio da parceria entre a piloto Rafa Ferreira e a Gree do Brasil. Produção audiovisual realizada pela Zero Gravidade Produtora Audiovisual.',
       meta: {
@@ -1249,6 +1254,7 @@
       categories: ['social'],
       format: 'v',
       videos: { v: '1195214124' },
+      thumbnail: 'assets/thumbs/porsche.jpg',
       roles: ['Captação cinematográfica','Edição de imagens'],
       desc: 'Produção audiovisual de Porsche Cayman S para colecionador particular de veículos. Produção audiovisual realizada para Carframe Mídia.',
       meta: {
@@ -1266,6 +1272,7 @@
       categories: ['eventos','sameday','social'],
       format: 'v',
       videos: { v: '1195217597' },
+      thumbnail: 'assets/thumbs/credit-ai.jpg',
       roles: ['Cobertura completa do evento','Captação audiovisual','Same Day Edit'],
       desc: 'Cobertura audiovisual de evento corporativo Credit AI com produção de conteúdo dinâmico para redes sociais e comunicação institucional. Cobertura completa do evento corporativo com captação audiovisual e entrega de same day edit.',
       meta: {
@@ -1283,6 +1290,7 @@
       categories: ['mobile','eventos','sameday','social','institucional'],
       format: 'v',
       videos: { v: '1195397806' },
+      thumbnail: 'assets/thumbs/cofeci.jpg',
       roles: ['Captação mobile','Cobertura de evento','Criação de conteúdo vertical','Edição rápida para publicação em tempo real'],
       desc: 'Cobertura mobile da participação do Sistema COFECI•CRECI no evento CIMI360, com produção de conteúdo dinâmico para redes sociais e comunicação institucional durante o evento. Produção audiovisual realizada pela Zero Gravidade Produtora Audiovisual.',
       meta: {
@@ -1301,6 +1309,7 @@
       categories: ['institucional'],
       format: 'h',
       videos: { h: '523792993' },
+      thumbnail: 'assets/thumbs/minasligas.jpg',
       roles: ['Captação audiovisual','Direção de fotografia','Edição','Pós-produção'],
       desc: 'Produção de vídeo institucional voltado para apresentar a estrutura, operação e posicionamento da Minasligas no setor industrial. Produção audiovisual realizada pela Zero Gravidade Produtora Audiovisual.',
       meta: {
@@ -1467,14 +1476,15 @@
     const cardClass = isVertical ? 'v' : 'h';
 
     // Determina a fonte da thumbnail
-    // 1) Se tem Vimeo, usa vumbnail.com
-    // 2) Se for Instagram-only, usa imagem custom (campo `thumbnail`) ou um placeholder
+    // 1) Se tem `thumbnail` custom, usa ela (prioridade)
+    // 2) Se tem Vimeo, usa vumbnail.com como fallback
+    // 3) Caso contrário, mostra placeholder
     let thumbSrc = '';
-    if (p.videos && (p.videos.h || p.videos.v)) {
+    if (p.thumbnail) {
+      thumbSrc = p.thumbnail;
+    } else if (p.videos && (p.videos.h || p.videos.v)) {
       const vid = p.videos.h || p.videos.v;
       thumbSrc = `https://vumbnail.com/${vid}_large.jpg`;
-    } else if (p.thumbnail) {
-      thumbSrc = p.thumbnail;
     }
 
     // Badge "Instagram" para projetos cuja fonte é Instagram
@@ -1523,8 +1533,8 @@
   }
 
   function hydrateFeatured() {
-    const el = document.getElementById('featuredImg');
-    if (el) el.src = `https://vumbnail.com/${REEL.videos.h}_large.jpg`;
+    // Banner usa imagem local agora (assets/thumbs/demoreel.jpg)
+    // Esta função fica vazia mas mantida pra não quebrar o init
   }
 
   // scroll horizontal das rows
