@@ -876,6 +876,47 @@
     margin: 0 auto !important;
   }
 
+  /* Layout multi-vídeo: vários Instagram lado a lado */
+  .modal-instagram-main.multi {
+    flex-wrap: wrap;
+    gap: 24px;
+    padding: 32px 24px;
+    align-items: flex-start;
+    justify-content: center;
+  }
+
+  .modal-instagram-main.multi blockquote.instagram-media {
+    flex: 0 1 340px;
+    max-width: 340px !important;
+    min-width: 280px !important;
+    margin: 0 !important;
+  }
+
+  .ig-block-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid rgba(199, 168, 122, 0.3);
+    text-align: center;
+    width: 100%;
+    max-width: 340px;
+  }
+
+  /* Em mobile, vira coluna única */
+  @media (max-width: 700px) {
+    .modal-instagram-main.multi {
+      flex-direction: column;
+      align-items: center;
+    }
+    .modal-instagram-main.multi blockquote.instagram-media {
+      flex: 1 1 auto;
+    }
+  }
+
   /* Placeholder na thumbnail (quando não tem nem Vimeo nem imagem custom) */
   .thumb-placeholder {
     position: absolute;
@@ -1340,6 +1381,30 @@
         'Produção': 'Ana Paula Fantecele',
         'Formato': 'Vertical 9:16'
       }
+    },
+    {
+      id: 'p11',
+      title: 'Expert Trader XP',
+      year: '2025',
+      client: 'Studio 3K Filmes',
+      categories: ['eventos','social'],
+      format: 'v',
+      instagram: [
+        { url: 'https://www.instagram.com/p/DWhc__kgdDc/', label: 'Highlights · edição Studio 3K Filmes' },
+        { url: 'https://www.instagram.com/p/DWl8IolgPYf/', label: 'Depoimentos da equipe TM1 · edição TM1' },
+        { url: 'https://www.instagram.com/p/DWbk7iCgDY9/', label: 'Roberto Indech · 1º dia + parceria TM1' }
+      ],
+      thumbnail: 'assets/thumbs/expert-trader-xp.jpg',
+      roles: ['Captação de imagens'],
+      desc: 'Captação audiovisual do evento Expert Trader XP, com três peças finais editadas por equipes diferentes: highlights pela Studio 3K Filmes, depoimentos da equipe TM1 pela edição interna da TM1, e conteúdo com Roberto Indech sobre o primeiro dia do evento e a parceria TM1.',
+      meta: {
+        'Cliente direto': 'Studio 3K Filmes',
+        'Cliente final': 'XP Investimentos / TM1',
+        'Evento': 'Expert Trader XP',
+        'Função': 'Captação',
+        'Edições': 'Studio 3K Filmes + TM1',
+        'Formato': 'Vertical 9:16'
+      }
     }
   ];
 
@@ -1488,8 +1553,9 @@
     }
 
     // Badge "Instagram" para projetos cuja fonte é Instagram
-    const igBadge = (!p.videos && p.instagram)
-      ? '<span class="card-source-ig">via Instagram</span>'
+    const hasInstagram = p.instagram && (typeof p.instagram === 'string' || (Array.isArray(p.instagram) && p.instagram.length > 0));
+    const igBadge = (!p.videos && hasInstagram)
+      ? `<span class="card-source-ig">${Array.isArray(p.instagram) && p.instagram.length > 1 ? `${p.instagram.length} vídeos · Instagram` : 'via Instagram'}</span>`
       : '';
 
     return `
@@ -1568,14 +1634,24 @@
         videoHTML = `<div class="modal-video-wrap ${p.format}"><iframe src="${vimeoEmbed(vid)}&autoplay=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div>`;
       }
     } else if (p.instagram) {
-      // Instagram como fonte principal (sem Vimeo disponível)
+      // Instagram como fonte principal
+      // Pode ser uma string (1 vídeo) OU array de objetos [{url, label}] (vários vídeos)
+      const igList = Array.isArray(p.instagram)
+        ? p.instagram
+        : [{ url: p.instagram, label: '' }];
+
+      const blocks = igList.map((item, i) => `
+        ${item.label ? `<div class="ig-block-label">${item.label}</div>` : ''}
+        <blockquote class="instagram-media"
+                    data-instgrm-captioned
+                    data-instgrm-permalink="${item.url}"
+                    data-instgrm-version="14">
+        </blockquote>
+      `).join('');
+
       videoHTML = `
-        <div class="modal-instagram-main">
-          <blockquote class="instagram-media"
-                      data-instgrm-captioned
-                      data-instgrm-permalink="${p.instagram}"
-                      data-instgrm-version="14">
-          </blockquote>
+        <div class="modal-instagram-main ${igList.length > 1 ? 'multi' : ''}">
+          ${blocks}
         </div>`;
     }
     videoEl.innerHTML = videoHTML;
